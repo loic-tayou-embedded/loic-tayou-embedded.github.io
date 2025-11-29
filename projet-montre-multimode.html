@@ -107,7 +107,7 @@
             <h3>Résumé du projet</h3>
             <p>
                 Conception d’une montre « multimode » sur FPGA avec trois modes principaux :
-                <strong>horloge</strong> (HH:MM), <strong>chronomètre</strong> et <strong>minuterie</strong>, le tout
+                <strong>horloge</strong> (HH:MM), <strong>chronomètre</strong> et <strong>alarme</strong>, le tout
                 affiché sur les 4 afficheurs 7&nbsp;segments de la carte DE1.
             </p>
             <p>
@@ -120,11 +120,11 @@
                     synchronisé par le tick de 1&nbsp;s ;</li>
                 <li><strong>ALARM_BELL</strong> : Un NIOS II custom component pour l’alarme qui pilote un
                     <em>chenillard</em> sur les LEDs (LEDR)
-                    si la minuterie est arrivée à échéance.</li>
+                    si l'alarme est arrivée à échéance.</li>
             </ul>
             <p>
-                Le Nios&nbsp;II gère la logique de haut niveau (changement de mode, réglage de l’heure et de la
-                minuterie, synchronisation avec l’horloge système), tandis que les IP <code>CHRONO</code> et
+                Le Nios&nbsp;II gère la logique de haut niveau (changement de mode, réglage de l’heure et de
+                l'alarme, synchronisation avec l’horloge système), tandis que les IP <code>CHRONO</code> et
                 <code>ALARM_BELL</code> prennent en charge la partie temps réel directement en logique VHDL. 
                 C’est un exemple typique de <strong>co-design matériel / logiciel</strong> sur FPGA.
             </p>
@@ -141,16 +141,16 @@
                     L'utilisateur peut démarrer et stopper le chronomètre via la touche <strong>KEY2</strong> ou le réinitialiser via la touche <strong>KEY3</strong>. Le processeur active ou stoppe l’IP <code>CHRONO</code> en écrivant dans un registre
                     mémoire-mappé ; le composant matériel compte à 1&nbsp;Hz et prend en charge la logique
                     de chronomètre.</li>
-                <li><strong>Mode minuterie</strong> : la touche de mode <strong>KEY1</strong> permet de basculer en mode minuterie et La led verte <code>LEDG2</code> permet de signaler ce mode. dans ce mode, l'heure est programmée via les commutateurs
-                    (heures/minutes) et l'activation de la minuterie se fait via la touche <strong>KEY2</strong>.
+                <li><strong>Mode alarme</strong> : la touche de mode <strong>KEY1</strong> permet de basculer en mode alarme et La led verte <code>LEDG2</code> permet de signaler ce mode. dans ce mode, l'heure est programmée via les commutateurs
+                    (heures/minutes) et l'activation de l'alarme se fait via la touche <strong>KEY2</strong>.
                     Quand l’horloge atteint l’instant programmé, le logiciel déclenche l’IP
                     <code>ALARM_BELL</code> qui active un chenillard sur les LEDs qui reste actif tant que l’utilisateur
                     n’appuie pas sur le bouton d’arrêt d’alarme (<strong>KEY3</strong>).</li>
             </ul>
             <p>
                 L’horloge continue de tourner en permanence en arrière-plan (comme une vraie montre),
-                même lorsqu’on se trouve en mode chronomètre ou minuterie. Les LEDs <code>LEDG</code> indiquent
-                en temps réel le mode actif (horloge / chrono / minuterie). Les touches KEYs sont configurer pour lever
+                même lorsqu’on se trouve en mode chronomètre ou alarme. Les LEDs <code>LEDG</code> indiquent
+                en temps réel le mode actif (horloge / chrono / alarme). Les touches KEYs sont configurer pour lever
 				des interruptions (le niveau de leur irq est-elle que celui du timer interval soit prioritaire) s'ils sont appuyés.
             </p>
         </section>
