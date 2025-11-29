@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>UART – Servo – Télémètre – TAYOU Loïc Wilfried</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body{margin:0;font-family:system-ui, -apple-system, BlinkMacSystemFont,"Segoe UI",sans-serif;
+             background:radial-gradient(circle at top,#111827,#020617);color:#e5e7eb;line-height:1.6}
+        a{text-decoration:none;color:inherit}
+        .container{max-width:900px;margin:0 auto;padding:0 1.2rem}
+        header{position:sticky;top:0;z-index:10;background:rgba(2,6,23,.9);
+               backdrop-filter:blur(10px);border-bottom:1px solid #1f2937}
+        .nav{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0}
+        .logo{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.9rem}
+        main{padding:2.5rem 0 3rem}
+        .section-title{font-size:1.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:.7rem}
+        .section-title i{color:#4f46e5}
+        .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0 1.2rem}
+        .tag{font-size:.75rem;padding:.2rem .6rem;border-radius:999px;
+             border:1px solid rgba(148,163,184,.5);background:#020617;color:#9ca3af}
+        .card{background:#111827;border-radius:1rem;border:1px solid #1f2937;
+              padding:1.2rem 1.3rem;margin-bottom:1rem}
+        h3{margin:.6rem 0}
+        footer{text-align:center;padding:1rem 0 2rem;font-size:.8rem;color:#9ca3af}
+        .links{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1rem}
+        .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;
+             border-radius:999px;border:1px solid #4f46e5;background:#4f46e5;
+             color:#e5e7eb;font-size:.85rem}
+        .btn.secondary{background:transparent;border-color:#374151;color:#9ca3af}
+        .btn:hover{opacity:.9}
+    </style>
+</head>
+<body>
+<header>
+    <div class="container nav">
+        <div class="logo">TAYOU Loïc Wilfried</div>
+        <nav>
+            <ul style="display:flex;gap:1rem;list-style:none;font-size:.9rem;">
+                <li><a href="index.html#projects">Retour au portfolio</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <h2 class="section-title"><i class="fas fa-wave-square"></i> Chaîne UART – Servo – Télémètre</h2>
+        <p><strong>Type :</strong> Projet personnel – Carte DE1 Cyclone&nbsp;II – VHDL (tout hardware)</p>
+
+        <div class="tags">
+            <span class="tag">VHDL</span>
+            <span class="tag">UART RX/TX</span>
+            <span class="tag">PWM servomoteur</span>
+            <span class="tag">Télémètre ultrason</span>
+            <span class="tag">ModelSim</span>
+            <span class="tag">Testbenches &amp; scripts .do</span>
+        </div>
+
+        <section class="card">
+            <h3>Résumé du projet</h3>
+            <p>
+                Projet personnel inspiré d’un sujet de mini-projet universitaire : tous les blocs sont décrits en
+                <strong>VHDL</strong> et la carte utilisée est la DE1 (pas de processeur, pas de Qsys). L’objectif est de construire une
+                chaîne complète autour d’un FPGA permettant :
+            </p>
+            <ul>
+                <li>d’échanger des données avec un PC via une liaison série UART,</li>
+                <li>de piloter un servomoteur en PWM à partir des commandes reçues,</li>
+                <li>de mesurer une distance avec un télémètre à ultrasons et de renvoyer la mesure au PC.</li>
+            </ul>
+            <p>
+                Le <strong>système complet</strong> implémente un automate qui sélectionne le comportement
+                en fonction des interrupteurs <code>SW1:SW0</code> (Système UART/Servo/Télémètre) : 
+            </p>
+            <ul>
+                <li><strong>SW1 SW0 = 00 :</strong> mode <em>idle</em>, aucun IP (UART, servo, télémètre) n’est actif.</li>
+                <li><strong>SW1 SW0 = 01 :</strong> mode <em>UART + servo</em> : le PC envoie une position via le terminal série
+                    (Putty), traduite en largeur d’impulsion PWM pour positionner le servomoteur.</li>
+                <li><strong>SW1 SW0 = 10 :</strong> mode <em>UART + télémètre</em> : le FPGA commande le télémètre, récupère la distance
+                    mesurée et renvoie cycliquement la valeur vers le terminal PC.</li>
+                <li><strong>SW1 SW0 = 11 :</strong> mode <em>servo + télémètre synchronisés</em> : le servo balaie l’environnement
+                    tandis que le télémètre mesure la distance, ce qui permet d’associer une mesure de distance à un angle donné.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h3>Ce que j’ai réalisé</h3>
+            <ul>
+                <li>Implémentation VHDL des blocs UART RX/TX paramétrables (baudrate, format 8N1).</li>
+                <li>Générateur de PWM pour servomoteur (période = 20&nbsp;ms, position contrôlée par registre).</li>
+                <li>IP télémètre ultrason (génération du pulse de déclenchement, mesure du temps d’écho, conversion en distance).</li>
+                <li>Écriture de testbenches dédiés (UART_TX_tb, UART_RX_tb, SERVO_tb, TÉLÉMÈTRE_tb) et scripts
+                    <code>.do</code> ModelSim pour automatiser les simulations.</li>
+                <li>Automate VHDL de supervision implémentant les 4 modes (idle, UART+servo, UART+télémètre, servo+télémètre).</li>
+                <li>Intégration de tous les blocs dans une top-level et validation du fonctionnement complet sur la carte DE1.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h3>Techno &amp; outils</h3>
+            <p>FPGA DE1 Cyclone&nbsp;II, VHDL, UART, PWM, télémètre à ultrasons, Intel Quartus, ModelSim (testbenches + scripts .do).</p>
+            <div class="links">
+                <a class="btn secondary" href="index.html#projects"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+                <a class="btn" href="https://github.com/loic-tayou-embedded/fpga-uart-servo-telemetre" target="_blank">
+                    <i class="fab fa-github"></i> Code source (GitHub)
+                </a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    &copy; 2025 – TAYOU Loïc Wilfried
+</footer>
+</body>
+</html>

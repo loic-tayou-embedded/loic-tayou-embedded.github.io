@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Montre multimode sur FPGA – TAYOU Loïc Wilfried</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body{
+            margin:0;
+            font-family:system-ui, -apple-system, BlinkMacSystemFont,"Segoe UI",sans-serif;
+            background:radial-gradient(circle at top,#111827,#020617);
+            color:#e5e7eb;
+            line-height:1.6;
+        }
+        a{text-decoration:none;color:inherit}
+        .container{max-width:900px;margin:0 auto;padding:0 1.2rem}
+        header{
+            position:sticky;top:0;z-index:10;
+            background:rgba(2,6,23,.9);
+            backdrop-filter:blur(10px);
+            border-bottom:1px solid #1f2937;
+        }
+        .nav{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0}
+        .logo{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.9rem}
+        main{padding:2.5rem 0 3rem}
+        .section-title{
+            font-size:1.6rem;
+            margin-bottom:1rem;
+            display:flex;
+            align-items:center;
+            gap:.7rem;
+        }
+        .section-title i{color:#4f46e5}
+        .tags{
+            display:flex;
+            flex-wrap:wrap;
+            gap:.4rem;
+            margin:.8rem 0 1.2rem;
+        }
+        .tag{
+            font-size:.75rem;
+            padding:.2rem .6rem;
+            border-radius:999px;
+            border:1px solid rgba(148,163,184,.5);
+            background:#020617;
+            color:#9ca3af;
+        }
+        .card{
+            background:#111827;
+            border-radius:1rem;
+            border:1px solid #1f2937;
+            padding:1.2rem 1.3rem;
+            margin-bottom:1rem;
+        }
+        h3{margin:.6rem 0}
+        footer{text-align:center;padding:1rem 0 2rem;font-size:.8rem;color:#9ca3af}
+        .links{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1rem}
+        .btn{
+            display:inline-flex;
+            align-items:center;
+            gap:.4rem;
+            padding:.4rem .9rem;
+            border-radius:999px;
+            border:1px solid #4f46e5;
+            background:#4f46e5;
+            color:#e5e7eb;
+            font-size:.85rem;
+        }
+        .btn.secondary{
+            background:transparent;
+            border-color:#374151;
+            color:#9ca3af;
+        }
+        .btn:hover{opacity:.9}
+        ul{padding-left:1.1rem}
+    </style>
+</head>
+<body>
+<header>
+    <div class="container nav">
+        <div class="logo">TAYOU Loïc Wilfried</div>
+        <nav>
+            <ul style="display:flex;gap:1rem;list-style:none;font-size:.9rem;">
+                <li><a href="index.html#projects">Retour au portfolio</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <h2 class="section-title"><i class="fas fa-clock"></i> Montre multimode sur FPGA</h2>
+        <p><strong>Type :</strong> Projet personnel – Carte DE1 Cyclone&nbsp;II – Nios&nbsp;II &amp; Custom Components</p>
+
+        <div class="tags">
+            <span class="tag">Nios&nbsp;II</span>
+            <span class="tag">Custom Components Avalon (CHRONO, ALARM_BELL)</span>
+            <span class="tag">Interval Timer &amp; interruptions</span>
+            <span class="tag">VHDL</span>
+            <span class="tag">HAL / C embarqué</span>
+            <span class="tag">Co-design HW/SW</span>
+        </div>
+
+        <section class="card">
+            <h3>Résumé du projet</h3>
+            <p>
+                Conception d’une montre « multimode » sur FPGA avec trois modes principaux :
+                <strong>horloge</strong> (HH:MM), <strong>chronomètre</strong> et <strong>minuterie</strong>, le tout
+                affiché sur les 4 afficheurs 7&nbsp;segments de la carte DE1.
+            </p>
+            <p>
+                L’architecture repose sur un processeur <strong>Nios&nbsp;II</strong>, un timer interval configuré à 1&nbsp;s,
+                des PIO pour les boutons <code>KEY</code>, les commutateurs <code>SW</code>, les LEDs et les afficheurs,
+                ainsi que <strong>deux IP personnalisées Avalon-MM</strong> :
+            </p>
+            <ul>
+                <li><strong>CHRONO</strong> : Un NIOS II custom component pour le chronomètre matériel (démarrage/arrêt/reset via registre),
+                    synchronisé par le tick de 1&nbsp;s ;</li>
+                <li><strong>ALARM_BELL</strong> : Un NIOS II custom component pour l’alarme qui pilote un
+                    <em>chenillard</em> sur les LEDs (LEDR)
+                    si la minuterie est arrivée à échéance.</li>
+            </ul>
+            <p>
+                Le Nios&nbsp;II gère la logique de haut niveau (changement de mode, réglage de l’heure et de la
+                minuterie, synchronisation avec l’horloge système), tandis que les IP <code>CHRONO</code> et
+                <code>ALARM_BELL</code> prennent en charge la partie temps réel directement en logique VHDL. 
+                C’est un exemple typique de <strong>co-design matériel / logiciel</strong> sur FPGA.
+            </p>
+        </section>
+
+        <section class="card">
+            <h3>Fonctionnement de la montre</h3>
+            <ul>
+                <li><strong>Mode horloge</strong> : le timer interval génère une interruption toutes les 1&nbsp;s ;
+                    l’ISR incrémente une structure <code>horloge</code> (heures, minutes, secondes)
+                    et l’affichage est mis à jour en HH:MM. Les commutateurs <code>SW</code> permettent
+                    de régler l’heure (heures/minutes) lorsqu’on appuie sur la touche <strong>KEY3</strong> de configuration et la led vert <code>LEDG0</code> permet de signaler le mode horloge.</li>
+                <li><strong>Mode chronomètre</strong> : la touche de mode <strong>KEY1</strong> permet de basculer en mode chrono et La led vert <code>LEDG1</code> permet de signaler ce mode.
+                    L'utilisateur peut démarrer et stopper le chronomètre via la touche <strong>KEY2</strong> ou le réinitialiser via la touche <strong>KEY3</strong>. Le processeur active ou stoppe l’IP <code>CHRONO</code> en écrivant dans un registre
+                    mémoire-mappé ; le composant matériel compte à 1&nbsp;Hz et prend en charge la logique
+                    de chronomètre.</li>
+                <li><strong>Mode minuterie</strong> : la touche de mode <strong>KEY1</strong> permet de basculer en mode minuterie et La led verte <code>LEDG2</code> permet de signaler ce mode. dans ce mode, l'heure est programmée via les commutateurs
+                    (heures/minutes) et l'activation de la minuterie se fait via la touche <strong>KEY2</strong>.
+                    Quand l’horloge atteint l’instant programmé, le logiciel déclenche l’IP
+                    <code>ALARM_BELL</code> qui active un chenillard sur les LEDs qui reste actif tant que l’utilisateur
+                    n’appuie pas sur le bouton d’arrêt d’alarme (<strong>KEY3</strong>).</li>
+            </ul>
+            <p>
+                L’horloge continue de tourner en permanence en arrière-plan (comme une vraie montre),
+                même lorsqu’on se trouve en mode chronomètre ou minuterie. Les LEDs <code>LEDG</code> indiquent
+                en temps réel le mode actif (horloge / chrono / minuterie). Les touches KEYs sont configurer pour lever
+				des interruptions (le niveau de leur irq est-elle que celui du timer interval soit prioritaire) s'ils sont appuyés.
+            </p>
+        </section>
+
+        <section class="card">
+            <h3>Ce que j’ai réalisé</h3>
+            <ul>
+                <li>Conception de l’architecture globale : Nios&nbsp;II + timer + PIO + deux
+                    <strong>Custom Components Avalon-MM</strong> (<code>CHRONO</code> et <code>ALARM_BELL</code>).</li>
+                <li>Écriture des blocs VHDL :
+                    <ul>
+                        <li>l'IP du chronomètre matériel (<code>CHRONO</code>) ;</li>
+                        <li>IP <code>ALARM_BELL</code> incluant le pilotage du chenillard de LEDs ;</li>
+                        <li>modules auxiliaires (compteurs BCD, diviseur de fréquence, pilotes 7&nbsp;segments).</li>
+						<li>le top_level.</li>
+                    </ul>
+                </li>
+                <li>Les interfaces avec le bus Avalon des IPs (<code>CHRONO</code>) et (<code>ALARM_BELL</code>) et leur
+                    intégration dans  qsys / Platform Designer.</li>
+                <li>Développement du firmware en C embarqué (HAL Nios&nbsp;II) :
+                    gestion des interruptions du timer et des touches KEYs, machine d’états de la montre, lecture des touches et des
+                    commutateurs, écriture dans les registres de contrôle des IP personnalisées.</li>
+                <li>Validation en simulation fonctionnelle des blocs VHDL (ModelSim), puis tests finaux sur la carte DE1.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h3>Techno &amp; outils</h3>
+            <p>
+                FPGA Cyclone&nbsp;II (DE1), Nios&nbsp;II, bus Avalon-MM (PIO, timer, IP custom),
+                Custom Components Avalon (<code>CHRONO</code>, <code>ALARM_BELL</code>), VHDL,
+                C embarqué (HAL), gestion d’interruptions (timer 1&nbsp;s), Intel Quartus,
+                Platform Designer, ModelSim.
+            </p>
+            <div class="links">
+                <a class="btn secondary" href="index.html#projects">
+                    <i class="fas fa-arrow-left"></i> Retour au portfolio
+                </a>
+                <a class="btn" href="https://github.com/loic-tayou-embedded/fpga-montre-multimode" target="_blank">
+                    <i class="fab fa-github"></i> Code source (GitHub)
+                </a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    &copy; 2025 – TAYOU Loïc Wilfried
+</footer>
+</body>
+</html>

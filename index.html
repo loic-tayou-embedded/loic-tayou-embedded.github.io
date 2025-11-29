@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio – TAYOU Loïc Wilfried</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Icônes Font Awesome (CDN) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <style>
+        :root {
+            --bg: #050816;
+            --bg-alt: #0b1020;
+            --accent: #4f46e5;
+            --accent-soft: rgba(79, 70, 229, 0.1);
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --card: #111827;
+            --border: #1f2937;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #111827, #020617);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a { color: inherit; text-decoration: none; }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.2rem;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            backdrop-filter: blur(10px);
+            background: rgba(2, 6, 23, 0.9);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+        }
+
+        .logo {
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 1.2rem;
+            list-style: none;
+            font-size: 0.9rem;
+        }
+
+        nav a {
+            color: var(--muted);
+        }
+
+        nav a:hover {
+            color: var(--accent);
+        }
+
+        main {
+            padding: 2.5rem 0 3rem;
+        }
+
+        section {
+            padding: 3rem 0;
+            border-bottom: 1px solid rgba(31, 41, 55, 0.5);
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .section-title i {
+            color: var(--accent);
+        }
+
+        /* HERO */
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.1rem, 4vw, 2.8rem);
+            margin-bottom: 0.6rem;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 0.98rem;
+            color: var(--text);
+            margin-bottom: 1.4rem;
+        }
+
+        .hero-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .tag {
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            padding: 0.2rem 0.7rem;
+            font-size: 0.75rem;
+            color: var(--muted);
+            background: #020617;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.55rem 1.1rem;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            font-size: 0.85rem;
+            cursor: pointer;
+            background: var(--accent);
+            color: #e5e7eb;
+        }
+
+        .btn.secondary {
+            background: transparent;
+            border-color: var(--border);
+            color: var(--muted);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .hero-side {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-photo {
+            width: 190px;
+            height: 230px;
+            border-radius: 999px;
+            object-fit: cover;
+            border: 4px solid #020617;
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.6);
+        }
+
+        .hero-card {
+            border-radius: 1.25rem;
+            padding: 1.1rem 1.2rem;
+            background: radial-gradient(circle at top left, #1e293b, #020617);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            font-size: 0.88rem;
+            width: 100%;
+        }
+
+        .hero-card h3 {
+            margin-bottom: 0.6rem;
+            font-size: 1rem;
+        }
+
+        .hero-card ul {
+            list-style: none;
+        }
+
+        .hero-card li {
+            margin-bottom: 0.35rem;
+            color: var(--muted);
+        }
+
+        /* PROJETS */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.4rem;
+        }
+
+        .project-card {
+            background: var(--card);
+            border-radius: 1rem;
+            padding: 1.1rem 1.2rem;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .project-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .project-meta {
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-top: 0.4rem;
+        }
+
+        .project-tag {
+            font-size: 0.72rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: #c7d2fe;
+        }
+
+        .project-links {
+            margin-top: 0.4rem;
+            font-size: 0.8rem;
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .project-links a {
+            color: var(--accent);
+        }
+
+        .projects-subtitle {
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.8rem;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .projects-subtitle span {
+            height: 1px;
+            flex: 1;
+            background: rgba(148, 163, 184, 0.4);
+        }
+
+        /* COMPÉTENCES, FORMATION, CONTACT, FOOTER identiques à avant */
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.2rem;
+        }
+        .skill-category {
+            background: var(--card);
+            border-radius: 1rem;
+            padding: 1rem 1.1rem;
+            border: 1px solid var(--border);
+        }
+        .skill-category h3 { font-size: 1rem; margin-bottom: 0.6rem; }
+        .skill-items { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+        .skill-item {
+            font-size: 0.78rem;
+            padding: 0.18rem 0.6rem;
+            border-radius: 999px;
+            background: #020617;
+            border: 1px solid rgba(55,65,81,0.9);
+            color: var(--muted);
+        }
+
+        .education-item {
+            background: var(--card);
+            border-radius: 1rem;
+            padding: 1rem 1.1rem;
+            border: 1px solid var(--border);
+            margin-bottom: 1rem;
+        }
+        .education-header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 0.4rem;
+        }
+        .education-title { font-weight: 600; }
+        .education-meta { font-size: 0.85rem; color: var(--muted); }
+        .education-item ul {
+            margin-left: 1rem;
+            margin-top: 0.4rem;
+            font-size: 0.86rem;
+            color: var(--muted);
+        }
+
+        .cv-section p { font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem; }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.5fr);
+            gap: 1.6rem;
+        }
+        .contact-info p { font-size: 0.9rem; color: var(--muted); margin-bottom: 0.6rem; }
+        .contact-list { list-style: none; font-size: 0.9rem; }
+        .contact-list li { margin-bottom: 0.4rem; }
+        .social-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
+        .social-link-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.35rem 0.8rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+            background: #020617;
+            color: var(--muted);
+        }
+        .social-link-pill i { font-size: 0.95rem; }
+        .social-link-pill:hover { border-color: var(--accent); color: #e5e7eb; }
+		
+		/* Timeline formation */
+		.timeline {
+			margin-top: 0.8rem;
+			border-left: 1px solid rgba(148, 163, 184, 0.35);
+			padding-left: 1.3rem;
+		}
+
+		.timeline-item {
+			position: relative;
+			margin-bottom: 1.6rem;
+		}
+
+		.timeline-dot {
+			position: absolute;
+			left: -1.9rem;
+			top: 0.35rem;
+			width: 10px;
+			height: 10px;
+			border-radius: 999px;
+			background: #020617;
+			border: 2px solid var(--accent);
+		}
+
+		.timeline-content h3 {
+			font-size: 1.05rem;
+			margin-bottom: 0.2rem;
+		}
+
+		.timeline-meta {
+			font-size: 0.88rem;
+			color: var(--muted);
+			margin-bottom: 0.5rem;
+		}
+
+		.timeline-content p {
+			font-size: 0.9rem;
+			color: var(--muted);
+			margin-bottom: 0.45rem;
+		}
+
+		.timeline-content ul {
+			margin-left: 1rem;
+			margin-top: 0.3rem;
+			font-size: 0.88rem;
+			color: var(--muted);
+		}
+
+
+        footer {
+            text-align: center;
+            padding: 1rem 0 2rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        @media (max-width: 800px) {
+            .hero { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+            nav ul { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="container nav">
+        <div class="logo">TAYOU&nbsp;Loïc&nbsp;Wilfried</div>
+        <nav>
+            <ul>
+                <li><a href="#home">Accueil</a></li>
+                <li><a href="#projects">Projets</a></li>
+                <li><a href="#skills">Compétences</a></li>
+                <li><a href="#education">Formation</a></li>
+                <li><a href="#cv">CV</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <!-- ACCUEIL -->
+    <section id="home">
+        <div class="container hero">
+            <div>
+                <h1>Ingénieur en électronique &amp; et informatique pour l'embarqués - <span>FPGA / SoC</span></h1>
+                <p class="hero-subtitle">
+					Diplômé de Polytech Paris-Saclay, je suis spécialisé dans la conception de systèmes embarqués sur 
+					FPGA et le co-design matériel/logiciel.
+                </p>
+                <p>
+					Je conçois des architectures numériques complètes : développement de blocs VHDL, intégration de processeurs Nios II, 
+					composants & instructions personnalisés sur bus Avalon, et firmware en C/HAL ou STM32, avec validation (testbenches/scripts ModelSim) à chaque étape jusqu’au déploiement sur cible.
+                </p>
+
+                <div class="hero-tags">
+                    <span class="tag">FPGA &amp; VHDL</span>
+                    <span class="tag">Nios&nbsp;II (Custom Instruction &amp; Component)</span>
+                    <span class="tag">C embarqué (HAL / STM32)</span>
+                    <span class="tag">Simulation ModelSim</span>
+                    <span class="tag">Co-design HW/SW</span>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#projects" class="btn">
+                        <i class="fas fa-folder-open"></i> Voir mes projets
+                    </a>
+                    <a href="#cv" class="btn secondary">
+                        <i class="fas fa-file-arrow-down"></i> Télécharger mon CV
+                    </a>
+                </div>
+            </div>
+
+            <aside class="hero-side">
+                <!-- Remplace ce chemin par ta vraie photo -->
+                <img src="docs/photo_loic.jpg" alt="Photo de TAYOU Loïc Wilfried" class="profile-photo">
+                <div class="hero-card">
+                    <h3><i class="fas fa-id-badge"></i> En bref</h3>
+                    <ul>
+                        <li><strong>Nom :</strong> TAYOU Loïc Wilfried</li>
+                        <li><strong>Diplôme :</strong> Ingénieur en électronique et informatique pour l’embarqué – Polytech Paris-Saclay</li>
+                        <li><strong>Spécialités :</strong> FPGA (VHDL, Nios II, IP custom Avalon, co-design HW/SW), C embarqué (HAL Nios II, STM32, microcontrôleurs).</li>
+                        <li><strong>Expérience :</strong> 2 ans en apprentissage au CEA Saclay sur l’automatisation d’outils de simulation, le traitement d’images hyperspectrales et le developpement logiciel.</li>
+						<li><strong>Email :</strong> <a href="mailto:loic.tayou.ing@gmail.com">loic.tayou.ing@gmail.com</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <!-- PROJETS -->
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-microchip"></i> Projets sélectionnés</h2>
+
+            <!-- Projets personnels -->
+            <h3 class="projects-subtitle">
+                Projets personnels <span></span>
+            </h3>
+            <div class="projects-grid">
+				<!-- UART–Servo–Télémètre -->
+                <article class="project-card">
+					<div class="project-header">
+						<div>
+							<div class="project-title">Chaîne UART – Servo – Télémètre</div>
+							<div class="project-meta">Projet personnel – DE1 Cyclone&nbsp;II – VHDL (tout hardware)</div>
+						</div>
+					</div>
+					<div class="project-tags">
+						<span class="project-tag">VHDL</span>
+						<span class="project-tag">UART RX/TX</span>
+						<span class="project-tag">PWM Servo</span>
+						<span class="project-tag">Télémètre ultrason</span>
+						<span class="project-tag">ModelSim</span>
+						<span class="project-tag">Testbenches</span>
+					</div>
+					<div class="project-links">
+						<a href="projet-uart-servo-telemetre.html" target="_self">
+							<i class="fas fa-circle-info"></i> En savoir plus
+						</a>
+						<a href="https://github.com/loic-tayou-embedded/fpga-uart-servo-telemetre" target="_blank">
+							<i class="fab fa-github"></i> Code source (GitHub)
+						</a>
+					</div>
+				</article>
+				
+				
+                <!-- Montre multimode -->
+                <article class="project-card">
+					<div class="project-header">
+						<div>
+							<div class="project-title">Montre multimode sur FPGA (Horloge / Chronomètre / Minuterie)</div>
+							<div class="project-meta">Projet personnel – DE1 Cyclone&nbsp;II – Nios&nbsp;II &amp; Custom Components</div>
+						</div>
+					</div>
+					<div class="project-tags">
+						<span class="project-tag">Nios&nbsp;II</span>
+						<span class="project-tag">Custom Components Avalon (CHRONO, ALARM_BELL)</span>
+						<span class="project-tag">Interval Timer &amp; IRQ</span>
+						<span class="project-tag">VHDL</span>
+						<span class="project-tag">HAL / C embarqué</span>
+						<span class="project-tag">Co-design HW/SW</span>
+					</div>
+					<div class="project-links">
+						<a href="projet-montre-multimode.html" target="_self">
+							<i class="fas fa-circle-info"></i> En savoir plus
+						</a>
+						<a href="https://github.com/loic-tayou-embedded/fpga-montre-multimode" target="_blank">
+							<i class="fab fa-github"></i> Code source (GitHub)
+						</a>
+					</div>
+				</article>
+
+
+                <!-- Accélérateur convolution -->
+                <article class="project-card">
+					<div class="project-header">
+						<div>
+							<div class="project-title">Accélérateur Nios&nbsp;II – Convolution 3×3 &amp; filtre moyenneur</div>
+							<div class="project-meta">Projet personnel – DE1 – Instructions personnalisées Nios&nbsp;II</div>
+						</div>
+					</div>
+					<div class="project-tags">
+						<span class="project-tag">Custom Instruction (multi-cycle &amp; combinatoire)</span>
+						<span class="project-tag">Convolution 3×3</span>
+						<span class="project-tag">Filtre moyenneur 1D</span>
+						<span class="project-tag">VHDL &amp; MAC</span>
+						<span class="project-tag">HAL Timestamp</span>
+						<span class="project-tag">Co-design HW/SW</span>
+					</div>
+					<div class="project-links">
+						<a href="projet-accelerateur-convolution.html" target="_self">
+							<i class="fas fa-circle-info"></i> En savoir plus
+						</a>
+						<a href="https://github.com/loic-tayou-embedded/nios2-convolution-accelerator" target="_blank">
+							<i class="fab fa-github"></i> Code source (GitHub)
+						</a>
+					</div>
+				</article>
+            </div>
+
+            <!-- Projets académiques & groupe -->
+            <h3 class="projects-subtitle" style="margin-top:2.2rem;">
+                Projets académiques &amp; de groupe <span></span>
+            </h3>
+            <div class="projects-grid">
+                <!-- Robot suiveur de ligne -->
+                <article class="project-card">
+					<div class="project-header">
+						<div>
+							<div class="project-title">Système embarqué de commande de robot suiveur de ligne</div>
+							<div class="project-meta">Projet en binôme – 5ᵉ année cycle ingénieur – DE0-Nano</div>
+						</div>
+					</div>
+					<div class="project-tags">
+						<span class="project-tag">Robotique embarquée</span>
+						<span class="project-tag">FPGA &amp; VHDL</span>
+						<span class="project-tag">ADC &amp; capteurs IR</span>
+						<span class="project-tag">PWM moteurs</span>
+						<span class="project-tag">Co-design HW/SW</span>
+					</div>
+					<div class="project-links">
+						<a href="projet-robot-suiveur.html" target="_self">
+							<i class="fas fa-circle-info"></i> En savoir plus
+						</a>
+						<a href="https://github.com/loic-tayou-embedded/robot-suiveur-ligne-nios2-fpga" target="_blank">
+							<i class="fab fa-github"></i> Code source (GitHub)
+						</a>
+					</div>
+				</article>
+
+                <!-- Borne de recharge -->
+                <article class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <div class="project-title">Borne de recharge AC 230 V pour véhicule électrique (mode 3)</div>
+                            <div class="project-meta">Projet de groupe – 4ᵉ année cycle ingénieur</div>
+                        </div>
+                    </div>
+                    <div class="project-tags">
+                        <span class="project-tag">Projet de groupe</span>
+                        <span class="project-tag">ISO 61851 / SAE J1772</span>
+                        <span class="project-tag">Conception carte de contrôle</span>
+                        <span class="project-tag">Analog &amp; filtrage</span>
+                        <span class="project-tag">Altium Designer</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="projet-borne-recharge.html" target="_self">
+                            <i class="fas fa-circle-info"></i> En savoir plus
+                        </a>
+                        <a href="https://github.com/loic-tayou-embedded/borne-recharge-ac-iso61851" target="_blank">
+                            <i class="fab fa-github"></i> Code / schémas (GitHub)
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Robot aspirateur -->
+                <article class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <div class="project-title">Reverse engineering d’un robot aspirateur Ultenic D5S Pro</div>
+                            <div class="project-meta">Projet de groupe – 5ᵉ année cycle ingénieur</div>
+                        </div>
+                    </div>
+                    <div class="project-tags">
+                        <span class="project-tag">Projet de groupe</span>
+                        <span class="project-tag">Reverse engineering</span>
+                        <span class="project-tag">MCU GD32F103</span>
+                        <span class="project-tag">C bas niveau</span>
+                        <span class="project-tag">Robot aspirateur</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="projet-robot-aspirateur.html" target="_self">
+                            <i class="fas fa-circle-info"></i> En savoir plus
+                        </a>
+                        <a href="https://github.com/USERNAME/robot-aspirateur-ultenic" target="_blank">
+                            <i class="fab fa-github"></i> Code &amp; docs (GitHub)
+                        </a>
+                    </div>
+                </article>
+
+                <!-- CoVAPSy -->
+                <article class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <div class="project-title">Véhicule autonome CoVAPSy – STM32 + LiDAR 360°</div>
+                            <div class="project-meta">Projet de groupe – 5ᵉ année cycle ingénieur</div>
+                        </div>
+                    </div>
+                    <div class="project-tags">
+                        <span class="project-tag">Projet de groupe</span>
+                        <span class="project-tag">STM32 (NUCLEO-L432KC)</span>
+                        <span class="project-tag">UART + DMA</span>
+                        <span class="project-tag">LiDAR 360°</span>
+                        <span class="project-tag">Véhicule autonome</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="projet-covapsy.html" target="_self">
+                            <i class="fas fa-circle-info"></i> En savoir plus
+                        </a>
+                        <a href="https://github.com/USERNAME/covapsy-stm32-lidar" target="_blank">
+                            <i class="fab fa-github"></i> Code source (GitHub)
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPÉTENCES, FORMATION, CV, CONTACT (identiques à la version précédente) -->
+
+	<section id="skills">
+		<div class="container">
+			<h2 class="section-title"><i class="fas fa-tools"></i> Mes compétences</h2>
+			<div class="skills-grid">
+
+				<!-- FPGA & logique numérique -->
+				<div class="skill-category">
+					<h3><i class="fas fa-microchip"></i> FPGA &amp; logique numérique</h3>
+					<div class="skill-items">
+						<span class="skill-item">Conception RTL en VHDL (machines d’états, datapath)</span>
+						<span class="skill-item">Architecture FPGA (LUT, RAM, DSP, PLL)</span>
+						<span class="skill-item">Flow de conception : Synthèse, Placement et Routage, Programmation sur cible</span>
+						<span class="skill-item">Simulation fonctionnelle (testbenches + scripts .do)</span>
+						<span class="skill-item">Analyse temporelle &amp; fermeture de timing</span>
+						<span class="skill-item">Debug embarqué sur FPGA (sondes, observation de signaux)</span>
+					</div>
+				</div>
+
+				<!-- Nios II & SoC -->
+				<div class="skill-category">
+					<h3><i class="fas fa-microchip"></i> Nios&nbsp;II &amp; systèmes sur puce</h3>
+					<div class="skill-items">
+						<span class="skill-item">Softcore Nios&nbsp;II &amp; SOPC</span>
+						<span class="skill-item">Bus Avalon-MM / Avalon-ST</span>
+						<span class="skill-item">Interfaces Avalon-clock, Avalon-interrupt, Avalon-conduit</span>
+						<span class="skill-item">Composants personnalisés (Custom Component)</span>
+						<span class="skill-item">Instructions personnalisées (Custom Instruction extended)</span>
+						<span class="skill-item">Gestion d’interruptions (alt_irq_register)</span>
+						<span class="skill-item">Timers, interval timer &amp; timestamp</span>
+						<span class="skill-item">PIO / GPIO mémoire-mappés</span>
+					</div>
+				</div>
+
+				<!-- Logiciel embarqué -->
+				<div class="skill-category">
+					<h3><i class="fas fa-code"></i> Logiciel embarqué</h3>
+					<div class="skill-items">
+						<span class="skill-item">C embarqué sur Nios&nbsp;II (HAL, BSP)</span>
+						<span class="skill-item">C embarqué sur STM32 (HAL, Cube)</span>
+						<span class="skill-item">Conception de drivers bas niveau (GPIO, UART, timers, ADC, PWM)</span>
+						<span class="skill-item">Programmation par interruptions (ISR, gestion d’événements)</span>
+						<span class="skill-item">Mise au point sur cible (debugger, trace série, tests sur carte)</span>
+					</div>
+				</div>
+
+				<!-- Méthodes -->
+				<div class="skill-category">
+					<h3><i class="fas fa-project-diagram"></i> Méthodes &amp; pratiques</h3>
+					<div class="skill-items">
+						<span class="skill-item">Co-design matériel / logiciel</span>
+						<span class="skill-item">Git &amp; GitHub</span>
+						<span class="skill-item">Linux / ligne de commande</span>
+						<span class="skill-item">Documentation &amp; schémas d’architecture</span>
+					</div>
+				</div>
+
+				<!-- Outils & environnements -->
+				<div class="skill-category">
+					<h3><i class="fas fa-wrench"></i> Outils &amp; environnements</h3>
+					<div class="skill-items">
+						<span class="skill-item">Intel Quartus Prime (Platform Designer, SignalTap II, TimeQuest)</span>
+						<span class="skill-item">ModelSim</span>
+						<span class="skill-item">Xilinx Vivado, Vitis / Vitis HLS</span>
+						<span class="skill-item">STM32CubeIDE, STM32CubeMX, STM32CubeProgrammer</span>
+						<span class="skill-item">Keil uVision5</span>
+						<span class="skill-item">Nios&nbsp;II EDS (SBT for Eclipse, Monitor Program)</span>
+						<span class="skill-item">ST-LINK Utility, STM32 Trusted Package Creator</span>
+						<span class="skill-item">Eclipse / DS-5 pour projets embarqués</span>
+					</div>
+				</div>
+
+				<!-- Langages -->
+				<div class="skill-category">
+					<h3><i class="fas fa-terminal"></i> Langages de programmation</h3>
+					<div class="skill-items">
+						<span class="skill-item">VHDL (FPGA, IP custom, testbenches)</span>
+						<span class="skill-item">C embarqué (bare-metal, HAL, registres, interruptions, drivers simples)</span>
+						<span class="skill-item">Python (scripts, traitement de données, prototypage)</span>
+						<span class="skill-item">Java (UML &amp; programmation objet)</span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+    <section id="education">
+		<div class="container">
+			<h2 class="section-title">
+				<i class="fas fa-user-graduate"></i> Diplômes et Formations
+			</h2>
+
+			<div class="timeline">
+				<div class="timeline-item">
+					<div class="timeline-dot"></div>
+					<div class="timeline-content">
+						<h3>Diplôme d’ingénieur – Électronique et Informatique pour l’Embarqué (EIE)</h3>
+						<p class="timeline-meta">
+							2022 – 2025 · Polytech Paris-Saclay, Université Paris-Saclay (Orsay, France)
+						</p>
+						<p>
+							Parcours mixte : 1<sup>re</sup> année en formation initiale, puis 2<sup>e</sup> et 3<sup>e</sup> année en
+							apprentissage au <strong>CEA Saclay</strong> (assistant de recherche en traitement de données
+							hyperspectrales et automatisation d’outils de simulation).
+						</p>
+
+						<h4>Axes de formation principaux</h4>
+						<ul>
+							<li><strong>Électronique &amp; traitement du signal</strong> : électronique analogique, capteurs et acquisitions,
+								traitement du signal et des images, automatique et contrôle-commande.</li>
+							<li><strong>Informatique pour l’embarqué</strong> : C/C++ embarqué, microcontrôleurs, architecture des processeurs,
+								informatique industrielle et temps réel, systèmes communicants et réseaux embarqués.</li>
+							<li><strong>Systèmes numériques &amp; FPGA</strong> : logique numérique, co-conception matériel/logiciel sur FPGA,
+								bus de communication, objets connectés (IoT), systèmes sur puce (SoC).</li>
+							<li><strong>Électronique de puissance &amp; énergie</strong> : conversion d’énergie, électronique de puissance,
+								actionneurs et systèmes électromécaniques.</li>
+							<li><strong>Systèmes embarqués &amp; robotique</strong> : projets de robotique, systèmes embarqués multi-capteurs,
+								sûreté de fonctionnement et mise en œuvre concrète sur plateformes matérielles.</li>
+							<li><strong>Compétences transverses</strong> : gestion de projet, communication technique, anglais,
+								innovation et démarche d’ingénierie.</li>
+						</ul>
+
+						<p>
+							En parallèle, j’ai complété ma formation par le cours en ligne
+							<strong>« Développez en C pour l’embarqué » (OpenClassrooms)</strong>, axé sur la
+							maîtrise de la chaîne de développement bas niveau (outils, compilation croisée,
+							débogage, gestion mémoire, drivers simples).
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+    <section id="cv">
+        <div class="container cv-section">
+            <h2 class="section-title"><i class="fas fa-file-lines"></i> Curriculum Vitæ</h2>
+            <p>Tu peux télécharger mon CV détaillé (PDF).</p>
+            <a class="btn" href="docs/CV_TAYOU_Loic_Wilfried.pdf" download>
+                <i class="fas fa-download"></i> Télécharger mon CV
+            </a>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title"><i class="fas fa-paper-plane"></i> Contact</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p>
+                        Vous souhaitez échanger à propos d’un projet FPGA, d’une intégration Nios&nbsp;II ou d’un sujet
+                        systèmes embarqués ? N’hésitez pas à me contacter.
+                    </p>
+                    <ul class="contact-list">
+                        <li><strong>Email :</strong> <a href="mailto:loic.tayou.ing@gmail.com">loic.tayou.ing@gmail.com</a></li>
+                    </ul>
+
+                    <div class="social-links">
+                        <a class="social-link-pill" href="https://github.com/loic-tayou-embedded" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                        <a class="social-link-pill" href="https://www.linkedin.com/in/loic-wilfried-tayou" target="_blank">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <!-- <a class="social-link-pill" href="https://www.apec.fr/" target="_blank">
+                            <i class="fas fa-briefcase"></i> Apec
+                        </a> -->
+                    </div>
+                </div>
+
+                <div>
+                    <p class="education-meta">
+                        Ce portfolio est en cours d’évolution. D’autres projets seront ajoutés avec des liens GitHub détaillés.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    &copy; 2025 – TAYOU Loïc Wilfried – Portfolio systèmes embarqués &amp; FPGA.
+</footer>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Accélérateur Nios II – Convolution 3×3 & filtre moyenneur – TAYOU Loïc Wilfried</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+             background:radial-gradient(circle at top,#111827,#020617);color:#e5e7eb;line-height:1.6}
+        a{text-decoration:none;color:inherit}
+        .container{max-width:900px;margin:0 auto;padding:0 1.2rem}
+        header{position:sticky;top:0;z-index:10;background:rgba(2,6,23,.9);
+               backdrop-filter:blur(10px);border-bottom:1px solid #1f2937}
+        .nav{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0}
+        .logo{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.9rem}
+        main{padding:2.5rem 0 3rem}
+        .section-title{font-size:1.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:.7rem}
+        .section-title i{color:#4f46e5}
+        .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0 1.2rem}
+        .tag{font-size:.75rem;padding:.2rem .6rem;border-radius:999px;
+             border:1px solid rgba(148,163,184,.5);background:#020617;color:#9ca3af}
+        .card{background:#111827;border-radius:1rem;border:1px solid #1f2937;
+              padding:1.2rem 1.3rem;margin-bottom:1rem}
+        h3{margin:.6rem 0}
+        footer{text-align:center;padding:1rem 0 2rem;font-size:.8rem;color:#9ca3af}
+        .links{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1rem}
+        .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;
+             border-radius:999px;border:1px solid #4f46e5;background:#4f46e5;
+             color:#e5e7eb;font-size:.85rem}
+        .btn.secondary{background:transparent;border-color:#374151;color:#9ca3af}
+        .btn:hover{opacity:.9}
+        ul{padding-left:1.1rem}
+    </style>
+</head>
+<body>
+<header>
+    <div class="container nav">
+        <div class="logo">TAYOU Loïc Wilfried</div>
+        <nav>
+            <ul style="display:flex;gap:1rem;list-style:none;font-size:.9rem;">
+                <li><a href="index.html#projects">Retour au portfolio</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <h2 class="section-title"><i class="fas fa-bolt"></i> Accélérateur Nios&nbsp;II – Convolution 3×3 &amp; filtre moyenneur</h2>
+        <p><strong>Type :</strong> Projet personnel – Carte DE1 Cyclone&nbsp;II – Instructions personnalisées Nios&nbsp;II</p>
+
+        <div class="tags">
+            <span class="tag">Custom Instruction (multi-cycle &amp; combinatoire)</span>
+            <span class="tag">Convolution 3×3</span>
+            <span class="tag">Filtre moyenneur 1D</span>
+            <span class="tag">VHDL &amp; MAC</span>
+            <span class="tag">Nios&nbsp;II</span>
+            <span class="tag">HAL Timestamp</span>
+            <span class="tag">Co-design HW/SW</span>
+        </div>
+
+        <section class="card">
+            <h3>Résumé du projet</h3>
+            <p>
+                Ce projet explore deux types d’<strong>instructions personnalisées Nios&nbsp;II</strong> (interface extended)
+                pour l’accélération de traitements de signal / image :
+            </p>
+            <ul>
+                <li>une <strong>instruction multi-cycle</strong> <code>MAC_OP</code> dédiée à la convolution 3×3
+                    (filtre de type gaussien) sur une image 4×4 ;</li>
+                <li>une <strong>instruction combinatoire</strong> <code>FILTRE_MOYENNEUR</code> implémentant un filtre
+                    moyenneur 1D appliqué sur une ligne.</li>
+            </ul>
+            <p>
+                Les deux opérations partagent la même interface matérielle (<code>MAC_FILTRE_INTERFACE</code>) et sont
+                sélectionnées par un champ de contrôle (paramètre <code>N</code> de l’instruction custom). Côté logiciel,
+                deux macros C distinctes (<code>custom_mac_op()</code> et <code>filtre_moyenneur_custom()</code>) permettent
+                d’appeler facilement la variante souhaitée depuis le code utilisateur.
+            </p>
+            <p>
+                Pour chaque traitement (convolution 3×3 et filtre moyenneur 1D), une version
+                <strong>matérielle</strong> et une version <strong>pure software</strong> en C sont implémentées.
+                Le temps d’exécution est mesuré grâce au <strong>timestamp timer</strong> de la HAL, ce qui permet
+                de calculer le speedup apporté par les instructions personnalisées.
+            </p>
+        </section>
+
+        <section class="card">
+            <h3>Détails des traitements accélérés</h3>
+            <ul>
+                <li>
+                    <strong>Convolution 3×3 (MAC_OP – multi-cycle)</strong><br>
+                    <ul>
+                        <li>Image de test 4×4 stockée dans un tableau C (<code>input_image</code>),</li>
+                        <li>noyau gaussien 3×3 (<code>[1 2 1; 2 4 2; 1 2 1]</code>),</li>
+                        <li>pour chaque pixel interne, les 9 produits pixel×poids sont réalisés par l’instruction custom
+                            <code>MAC_OP</code>, ainsi que l'accumulation.</li>
+                        <li>comparaison avec une implémentation en C sur Nios&nbsp;II.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Filtre moyenneur 1D (FILTRE_MOYENNEUR – combinatoire)</strong><br>
+                    <ul>
+                        <li>Filtre du type : <code>y[i] = (3·x[i] + 1·x[i+1]) &gt;&gt; 2</code>,</li>
+                        <li>version custom : appel à <code>filtre_moyenneur_custom()</code> pour chaque paire de pixels
+                            consécutifs, le calcul étant réalisé en un cycle par la logique combinatoire,</li>
+                        <li>version software : même opération réalisée en C (multiplications + addition + décalage),
+                            puis comparaison de temps via le timestamp.</li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h3>Ce que j’ai réalisé</h3>
+            <ul>
+                <li>Écriture en VHDL des blocs :
+                    <ul>
+                        <li><code>MAC_OP</code> multi-cycle (multiplications–accumulations),</li>
+                        <li><code>FILTRE_MOYENNEUR</code> combinatoire,</li>
+                        <li>blocs d’addition <code>ADDC1</code>, <code>ADDCN</code> et <code>multiplier</code>,</li>
+                        <li>interface <code>MAC_FILTRE_INTERFACE</code> avec gestion du champ de sélection d’instruction.</li>
+                    </ul>
+                </li>
+                <li>Intégration de l’instruction personnalisée extended dans Nios&nbsp;II via Platform Designer
+                    (Custom Instruction), génération de la BSP et du système.</li>
+                <li>Développement du code C embarqué :
+                    <ul>
+                        <li>macro-instructions <code>custom_mac_op()</code> et <code>filtre_moyenneur_custom()</code>,</li>
+                        <li>implementations software,</li>
+                        <li>mesures de performances avec <code>alt_timestamp_start()</code> et
+                            <code>alt_timestamp()</code>, calcul de l’accélération.</li>
+                    </ul>
+                </li>
+                <li>Validation fonctionnelle par simulation ModelSim, puis tests sur la carte DE1.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h3>Techno &amp; outils</h3>
+            <p>
+                FPGA Cyclone&nbsp;II (DE1), processeur Nios&nbsp;II, interface
+                <strong>Custom Instruction extended</strong>, VHDL (arithmétique, MAC, filtres),
+                C embarqué (HAL), timestamp timer, Intel Quartus, Platform Designer, ModelSim.
+            </p>
+            <div class="links">
+                <a class="btn secondary" href="index.html#projects">
+                    <i class="fas fa-arrow-left"></i> Retour au portfolio
+                </a>
+                <a class="btn" href="https://github.com/loic-tayou-embedded/nios2-convolution-accelerator" target="_blank">
+                    <i class="fab fa-github"></i> Code source (GitHub)
+                </a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    &copy; 2025 – TAYOU Loïc Wilfried
+</footer>
+</body>
+</html>

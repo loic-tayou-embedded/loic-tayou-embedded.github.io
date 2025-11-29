@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Robot aspirateur Ultenic – TAYOU Loïc Wilfried</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body{margin:0;font-family:system-ui;background:radial-gradient(circle at top,#111827,#020617);color:#e5e7eb;line-height:1.6}
+        a{text-decoration:none;color:inherit}
+        .container{max-width:900px;margin:0 auto;padding:0 1.2rem}
+        header{position:sticky;top:0;z-index:10;background:rgba(2,6,23,.9);backdrop-filter:blur(10px);border-bottom:1px solid #1f2937}
+        .nav{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0}
+        .logo{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.9rem}
+        main{padding:2.5rem 0 3rem}
+        .section-title{font-size:1.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:.7rem}
+        .section-title i{color:#4f46e5}
+        .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0 1.2rem}
+        .tag{font-size:.75rem;padding:.2rem .6rem;border-radius:999px;border:1px solid rgba(148,163,184,.5);background:#020617;color:#9ca3af}
+        .card{background:#111827;border-radius:1rem;border:1px solid #1f2937;padding:1.2rem 1.3rem;margin-bottom:1rem}
+        h3{margin:.6rem 0}
+        footer{text-align:center;padding:1rem 0 2rem;font-size:.8rem;color:#9ca3af}
+        .links{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1rem}
+        .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;border-radius:999px;border:1px solid #4f46e5;background:#4f46e5;color:#e5e7eb;font-size:.85rem}
+        .btn.secondary{background:transparent;border-color:#374151;color:#9ca3af}
+        .btn:hover{opacity:.9}
+    </style>
+</head>
+<body>
+<header>
+    <div class="container nav">
+        <div class="logo">TAYOU Loïc Wilfried</div>
+        <nav>
+            <ul style="display:flex;gap:1rem;list-style:none;font-size:.9rem;">
+                <li><a href="index.html#projects">Retour au portfolio</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <h2 class="section-title"><i class="fas fa-radiation"></i> Reverse engineering d’un robot aspirateur Ultenic D5S Pro</h2>
+        <p><strong>Type :</strong> Projet de groupe – 5ᵉ année cycle ingénieur</p>
+
+        <div class="tags">
+            <span class="tag">Projet de groupe</span>
+            <span class="tag">Reverse engineering</span>
+            <span class="tag">MCU GD32F103VET6</span>
+            <span class="tag">C bas niveau</span>
+            <span class="tag">Robot aspirateur</span>
+        </div>
+
+        <section class="card">
+            <h3>Résumé du projet</h3>
+            <p>
+                Projet de 5ᵉ année autour d’un robot aspirateur Ultenic D5S Pro : analyse de l’architecture matérielle
+                (moteurs, capteurs, électronique de commande) et ajout d’un LiDAR pour améliorer la navigation. Un modèle du
+                robot a été recréé sous Webots par d’autres membres de l’équipe pour tester les stratégies de déplacement
+                et les interactions capteurs/actionneurs.
+            </p>
+        </section>
+
+        <section class="card">
+            <h3>Ce que j’ai réalisé</h3>
+            <ul>
+                <li>Exploration du PCB principal du robot et identification du microcontrôleur <strong>GD32F103VET6</strong> en boîtier LQFP100.</li>
+                <li>Étude approfondie de la documentation constructeur pour :
+                    <ul>
+                        <li>identifier les broches de programmation (SWD / UART) et les modes de boot,</li>
+                        <li>connaître les niveaux de tension et conditions de démarrage,</li>
+                        <li>localiser les broches utiles sur le PCB réel.</li>
+                    </ul>
+                </li>
+				<li>Déprotéger la mémoire flash via  le logiciel <strong>STM32 ST-LINK Utility</strong>. Pour flasher la carte, j'ai utilisé le programmateur (Débogueur/programmeur) ST-LINK/V2.</li>
+                <li>Mise en place de la chaîne de programmation du microcontrôleur (connexion physique, tensions, configuration du mode).</li>
+                <li>Développement de <strong>codes C bas niveau</strong> pour communiquer avec les capteurs et actionneurs de la carte
+                    (lecture de capteurs, commande moteurs, etc.).</li>
+                <li>Utilisation du robot virtuel sous Webots (créé par l’équipe) comme banc de test pour mes algorithmes avant essais sur robot réel.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h3>Techno &amp; outils</h3>
+            <p>Microcontrôleur GD32F103VET6, C embarqué bas niveau, SWD/UART, oscilloscope, reverse engineering PCB, Webots (simulation).</p>
+            <div class="links">
+                <a class="btn secondary" href="index.html#projects"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+                <a class="btn" href="https://github.com/USERNAME/robot-aspirateur-ultenic" target="_blank">
+                    <i class="fab fa-github"></i> Code &amp; docs (GitHub)
+                </a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    &copy; 2025 – TAYOU Loïc Wilfried
+</footer>
+</body>
+</html>

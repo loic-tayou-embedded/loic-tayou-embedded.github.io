@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Borne de recharge VE – TAYOU Loïc Wilfried</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* styles raccourcis */
+        body{margin:0;font-family:system-ui;background:radial-gradient(circle at top,#111827,#020617);color:#e5e7eb;line-height:1.6}
+        a{text-decoration:none;color:inherit}
+        .container{max-width:900px;margin:0 auto;padding:0 1.2rem}
+        header{position:sticky;top:0;z-index:10;background:rgba(2,6,23,.9);backdrop-filter:blur(10px);border-bottom:1px solid #1f2937}
+        .nav{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0}
+        .logo{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.9rem}
+        main{padding:2.5rem 0 3rem}
+        .section-title{font-size:1.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:.7rem}
+        .section-title i{color:#4f46e5}
+        .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0 1.2rem}
+        .tag{font-size:.75rem;padding:.2rem .6rem;border-radius:999px;border:1px solid rgba(148,163,184,.5);background:#020617;color:#9ca3af}
+        .card{background:#111827;border-radius:1rem;border:1px solid #1f2937;padding:1.2rem 1.3rem;margin-bottom:1rem}
+        h3{margin:.6rem 0}
+        footer{text-align:center;padding:1rem 0 2rem;font-size:.8rem;color:#9ca3af}
+        .links{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1rem}
+        .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;border-radius:999px;border:1px solid #4f46e5;background:#4f46e5;color:#e5e7eb;font-size:.85rem}
+        .btn.secondary{background:transparent;border-color:#374151;color:#9ca3af}
+        .btn:hover{opacity:.9}
+    </style>
+</head>
+<body>
+<header>
+    <div class="container nav">
+        <div class="logo">TAYOU Loïc Wilfried</div>
+        <nav>
+            <ul style="display:flex;gap:1rem;list-style:none;font-size:.9rem;">
+                <li><a href="index.html#projects">Retour au portfolio</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <h2 class="section-title"><i class="fas fa-charging-station"></i> Borne de recharge AC 230 V (mode 3)</h2>
+        <p><strong>Type :</strong> Projet de groupe – 4ᵉ année cycle ingénieur – Contrôleur électronique de borne VE</p>
+
+        <div class="tags">
+            <span class="tag">Projet de groupe</span>
+            <span class="tag">ISO 61851 / SAE J1772</span>
+            <span class="tag">Conception carte de contrôle</span>
+            <span class="tag">Analog / filtrage</span>
+            <span class="tag">Altium Designer</span>
+        </div>
+
+        <section class="card">
+            <h3>Résumé du projet</h3>
+            <p>
+                Projet coopératif de 4ᵉ année : conception d’une borne de recharge murale 230 V AC mode 3 pour véhicule
+                électrique, conforme à la norme ISO/IEC 61851 et à la recommandation SAE J1772. L’objectif était de
+                développer le <strong>contrôleur électronique basse puissance</strong> (hors électronique de puissance) en charge
+                du signal pilote, de la détection d’état du véhicule et de la commande du contacteur principal, en s’interfaçant
+                avec un module ESP32 et un simulateur de véhicule Schneider.
+            </p>
+        </section>
+
+        <section class="card">
+            <h3>Ce que j’ai réalisé</h3>
+            <ul>
+                <li>Recherche et lecture des normes ISO 61851 et SAE J1772 et de la documentation associée (notes d’application, exemples de schémas).</li>
+                <li>Définition de l’architecture du contrôleur (génération/mesure du signal pilote, détection des états A/B/C, commande contacteur).</li>
+                <li><strong>Dimensionnement des composants analogiques</strong> : résistances, pont diviseur de tension, amplificateur rail to rail LM6142, détecteur de crête, etc.</li>
+                <li>Prototypage sur plaque à essai avec alimentation de laboratoire et oscilloscope pour valider les niveaux de tension et la forme d’onde du signal pilote.</li>
+                <li>Conception du schéma et routage du PCB sous <strong>Altium Designer</strong> (placement, plans d’alim, connecteurs vers ESP32 et contacteur).</li>
+                <li>Tests du PCB fabriqué : vérification des tensions, mesures du signal pilote et validation avec le simulateur de véhicule.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h3>Techno &amp; outils</h3>
+            <p>Altium Designer, électronique analogique, filtrage, simulateur de véhicule Schneider, norme ISO 61851 / SAE J1772.</p>
+            <div class="links">
+                <a class="btn secondary" href="index.html#projects"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+                <a class="btn" href="https://github.com/loic-tayou-embedded/borne-recharge-ac-iso61851" target="_blank">
+                    <i class="fab fa-github"></i> Code / schémas (GitHub)
+                </a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    &copy; 2025 – TAYOU Loïc Wilfried
+</footer>
+</body>
+</html>

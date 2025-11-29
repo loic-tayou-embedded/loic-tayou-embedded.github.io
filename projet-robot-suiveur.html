@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Robot suiveur de ligne – TAYOU Loïc Wilfried</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body{margin:0;font-family:system-ui;background:radial-gradient(circle at top,#111827,#020617);color:#e5e7eb;line-height:1.6}
+        a{text-decoration:none;color:inherit}
+        .container{max-width:900px;margin:0 auto;padding:0 1.2rem}
+        header{position:sticky;top:0;z-index:10;background:rgba(2,6,23,.9);backdrop-filter:blur(10px);border-bottom:1px solid #1f2937}
+        .nav{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0}
+        .logo{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.9rem}
+        main{padding:2.5rem 0 3rem}
+        .section-title{font-size:1.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:.7rem}
+        .section-title i{color:#4f46e5}
+        .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0 1.2rem}
+        .tag{font-size:.75rem;padding:.2rem .6rem;border-radius:999px;border:1px solid rgba(148,163,184,.5);background:#020617;color:#9ca3af}
+        .card{background:#111827;border-radius:1rem;border:1px solid #1f2937;padding:1.2rem 1.3rem;margin-bottom:1rem}
+        h3{margin:.6rem 0}
+        footer{text-align:center;padding:1rem 0 2rem;font-size:.8rem;color:#9ca3af}
+        .links{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1rem}
+        .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;border-radius:999px;border:1px solid #4f46e5;background:#4f46e5;color:#e5e7eb;font-size:.85rem}
+        .btn.secondary{background:transparent;border-color:#374151;color:#9ca3af}
+        .btn:hover{opacity:.9}
+    </style>
+</head>
+<body>
+<header>
+    <div class="container nav">
+        <div class="logo">TAYOU Loïc Wilfried</div>
+        <nav>
+            <ul style="display:flex;gap:1rem;list-style:none;font-size:.9rem;">
+                <li><a href="index.html#projects">Retour au portfolio</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <h2 class="section-title"><i class="fas fa-robot"></i> Système embarqué de commande de robot suiveur de ligne</h2>
+        <p><strong>Type :</strong> Projet en binôme – 5ᵉ année cycle ingénieur – DE0-Nano</p>
+
+        <div class="tags">
+            <span class="tag">Robotique embarquée</span>
+            <span class="tag">FPGA &amp; VHDL</span>
+            <span class="tag">ADC &amp; capteurs IR</span>
+            <span class="tag">PWM moteurs</span>
+            <span class="tag">Co-design HW/SW</span>
+        </div>
+
+        <section class="card">
+            <h3>Résumé du projet</h3>
+            <p>
+                Conception d’un système de commande pour un robot suiveur de ligne utilisant une carte DE0-Nano capable de naviguer 
+				dans un labyrinthe en suivant une ligne noire.
+				Le robot utilise 7 capteurs infrarouges pour la navigation autonome, un contrôle précis des moteurs par modulation PWM, 
+				un automates VHDL pour le suivi de ligne avec correction de trajectoire en temps réel, la rotation sur place en cas de perte de la ligne et la gestion de fin de parcours. 
+				L'architecture technique repose sur un FPGA Cyclone IV avec processeur Nios II soft-core, une interface SPI pour l'acquisition des capteurs
+				via un ADC 12 bits et des PIO d'entrées / sorties.
+            </p>
+            <p>
+                Le système a été validé en simulation (IP vhdl) puis testé
+                en conditions réelles sur le robot (DE0-Nano + cartes moteurs/capteurs).
+            </p>
+        </section>
+
+        <section class="card">
+			<h3>Ce que nous avons réalisé en binôme</h3>
+			<ul>
+				<li>
+					Mise en place de l’architecture matérielle Nios&nbsp;II&nbsp;/ SDRAM&nbsp;/ PIO sous Qsys,
+					connexion aux capteurs et aux moteurs, et validation initiale par un programme C
+					pilotant les LEDs à partir des switchs de la carte.
+				</li>
+				<li>
+					Caractérisation expérimentale des moteurs du robot : calcul de la période PWM
+					(50&nbsp;MHz → 16&nbsp;kHz), mesures des rapports cycliques de démarrage hors sol / sur sol,
+					détermination de la vitesse minimale fiable et choix de <strong>Vmin = 70&nbsp;%</strong>. :contentReference[oaicite:0]{index=0}
+				</li>
+				<li>
+					Mise en place de la chaîne de mesure des capteurs de sol : récupération des
+					données brutes, calcul du seuil de détection (moyenne sur fond blanc/noir),
+					puis calcul de la position de la ligne <code>pos_ligne</code> à partir des indices des
+					capteurs actifs (PPU, PDU).
+				</li>
+				<li>
+					Conception et description en <strong>VHDL</strong> des automates :
+					<ul>
+						<li>automate de <strong>suivi de ligne</strong> (correction de trajectoire en fonction de
+							<code>pos_ligne</code>, gestion des virages gauche/droite) ;</li>
+						<li>automate de <strong>rotation sur place</strong> lorsque la ligne est perdue
+							(gestion de <code>start_rot</code>, <code>fin_rot</code>, direction de rotation) ;</li>
+					</ul>
+				</li>
+				<li>
+					Développement du code <strong>C embarqué</strong> sur Nios&nbsp;II pour superviser les automates matériels :
+					surveillance continue des signaux <code>START</code>, <code>FIN_SL</code>, <code>FIN_ROT</code>,
+					pilotage de <code>START_SL</code>, <code>START_ROT</code> et <code>DIR_ROT</code>, et
+					synchronisation avec la disponibilité des données capteurs (<code>READY</code>).
+				</li>
+				<li>
+					Validation complète du système : simulations fonctionnelles (suivi de ligne, perte
+					de ligne, rotation, aller-retour) puis tests sur robot réel avec réglage des gains et
+					des seuils jusqu’à obtenir un suivi de ligne stable.
+				</li>
+			</ul>
+		</section>
+
+        <section class="card">
+            <h3>Techno &amp; outils</h3>
+            <p>FPGA DE0-Nano, VHDL, ADC, PWM, Intel Quartus, ModelSim.</p>
+            <div class="links">
+                <a class="btn secondary" href="index.html#projects"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
+                <a class="btn" href="https://github.com/loic-tayou-embedded/robot-suiveur-ligne-nios2-fpga" target="_blank">
+                    <i class="fab fa-github"></i> Code source (GitHub)
+                </a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    &copy; 2025 – TAYOU Loïc Wilfried
+</footer>
+</body>
+</html>
