@@ -446,22 +446,18 @@
     <section id="home">
         <div class="container hero">
             <div>
-                <h1>Ingénieur en électronique &amp; et informatique pour l'embarqués - <span>FPGA / SoC</span></h1>
-                <p class="hero-subtitle">
-					Diplômé de Polytech Paris-Saclay, je suis spécialisé dans la conception de systèmes embarqués sur 
-					FPGA et le co-design matériel/logiciel.
-                </p>
+                <h1>Ingénieur en électronique et informatique pour l’embarqué</h1>
                 <p>
-					Je conçois des architectures numériques complètes : développement de blocs VHDL, intégration de processeurs Nios II, 
-					composants & instructions personnalisés sur bus Avalon, et firmware en C/HAL ou STM32, avec validation (testbenches/scripts ModelSim) à chaque étape jusqu’au déploiement sur cible.
+					Je suis un ingénieur curieux, rigoureux et impliqué. J’aime comprendre les problèmes en profondeur
+					pour construire des solutions utiles et bien pensées. Je suis à l’aise dans le travail en équipe et je prends
+					plaisir à mener un projet jusqu’au bout avec sérieux, méthode et esprit d’initiative.
                 </p>
 
                 <div class="hero-tags">
-                    <span class="tag">FPGA &amp; VHDL</span>
-                    <span class="tag">Nios&nbsp;II (Custom Instruction &amp; Component)</span>
-                    <span class="tag">C embarqué (HAL / STM32)</span>
-                    <span class="tag">Simulation ModelSim</span>
-                    <span class="tag">Co-design HW/SW</span>
+                    <span class="tag">FPGA</span>
+                    <span class="tag">VHDL</span>
+                    <span class="tag">Systèmes embarqués</span>
+                    <span class="tag">C embarqué (ARM / STM32)</span>
                 </div>
 
                 <div class="hero-actions">
@@ -580,6 +576,32 @@
 						</a>
 					</div>
 				</article>
+
+                <!-- Horloge mondiale FreeRTOS -->
+                <article class="project-card">
+					<div class="project-header">
+						<div>
+							<div class="project-title">Horloge mondiale avec affichage déporté sous FreeRTOS</div>
+							<div class="project-meta">Projet personnel – DE1 + STM32 + ESP32 – FreeRTOS, SPI, CAN, I2C</div>
+						</div>
+					</div>
+					<div class="project-tags">
+						<span class="project-tag">Nios&nbsp;II</span>
+						<span class="project-tag">FreeRTOS</span>
+						<span class="project-tag">SPI</span>
+						<span class="project-tag">CAN</span>
+						<span class="project-tag">STM32 / ESP32</span>
+						<span class="project-tag">OLED &amp; I2C</span>
+					</div>
+					<div class="project-links">
+						<a href="projet-horloge-mondiale-freertos.html" target="_self">
+							<i class="fas fa-circle-info"></i> En savoir plus
+						</a>
+						<a href="#" target="_blank">
+							<i class="fab fa-github"></i> Code source (GitHub)
+						</a>
+					</div>
+				</article>
             </div>
 
             <!-- Projets académiques & groupe -->
@@ -694,83 +716,87 @@
 
 	<section id="skills">
 		<div class="container">
-			<h2 class="section-title"><i class="fas fa-tools"></i> Mes compétences</h2>
+			<h2 class="section-title"><i class="fas fa-tools"></i> Compétences</h2>
 			<div class="skills-grid">
 
-				<!-- FPGA & logique numérique -->
 				<div class="skill-category">
-					<h3><i class="fas fa-microchip"></i> FPGA &amp; logique numérique</h3>
+					<h3><i class="fas fa-microchip"></i> Électronique numérique</h3>
 					<div class="skill-items">
-						<span class="skill-item">Conception RTL en VHDL (machines d’états, datapath)</span>
-						<span class="skill-item">Architecture FPGA (LUT, RAM, DSP, PLL)</span>
-						<span class="skill-item">Flow de conception : Synthèse, Placement et Routage, Programmation sur cible</span>
-						<span class="skill-item">Simulation fonctionnelle (testbenches + scripts .do)</span>
-						<span class="skill-item">Analyse temporelle &amp; fermeture de timing</span>
-						<span class="skill-item">Debug embarqué sur FPGA (sondes, observation de signaux)</span>
+						<span class="skill-item">Réaliser du co-design matériel / logiciel.</span>
+						<span class="skill-item">Développer des modules IP en VHDL et packager ces modules en custom components via Platform Designer / Qsys.</span>
+						<span class="skill-item">Simuler et valider fonctionnellement via des testbenches et des scripts Tcl (.do).</span>
+						<span class="skill-item">Accélérer des traitements en découpant un calcul complexe en plusieurs étapes simples (pipeline).</span>
+						<span class="skill-item">Optimiser la consommation en réduisant l’activité inutile via le clock enable, afin de limiter les calculs et les basculements inutiles.</span>
+						<span class="skill-item">Générer et exploiter le BSP pour développer du logiciel en haut niveau sur le Nios II.</span>
+						<span class="skill-item">Concevoir un système FPGA autour d’un processeur softcore.</span>
+						<span class="skill-item">Créer des custom instructions pour étendre le jeu d’instructions du Nios II à partir de modules IP décrits en VHDL.</span>
+						<span class="skill-item">Réaliser l’analyse temporelle (STA), poser les contraintes et conduire la fermeture de timing via TimeQuest Timing Analyzer.</span>
+						<span class="skill-item">Exploiter les ressources dédiées du FPGA pour optimiser le débit.</span>
+						<span class="skill-item">Implémenter le flow complet : synthèse, placement et routage, génération du bitstream et programmation de la carte.</span>
 					</div>
 				</div>
 
-				<!-- Nios II & SoC -->
 				<div class="skill-category">
-					<h3><i class="fas fa-microchip"></i> Nios&nbsp;II &amp; systèmes sur puce</h3>
+					<h3><i class="fas fa-code"></i> Développement de logiciels embarqués</h3>
 					<div class="skill-items">
-						<span class="skill-item">Softcore Nios&nbsp;II &amp; SOPC</span>
-						<span class="skill-item">Bus Avalon-MM / Avalon-ST</span>
-						<span class="skill-item">Interfaces Avalon-clock, Avalon-interrupt, Avalon-conduit</span>
-						<span class="skill-item">Composants personnalisés (Custom Component)</span>
-						<span class="skill-item">Instructions personnalisées (Custom Instruction extended)</span>
-						<span class="skill-item">Gestion d’interruptions (alt_irq_register)</span>
-						<span class="skill-item">Timers, interval timer &amp; timestamp</span>
-						<span class="skill-item">PIO / GPIO mémoire-mappés</span>
+						<span class="skill-item">Lire, analyser et exploiter la documentation technique (datasheet, reference manual, programming manual, user manual) et s’appuyer sur CMSIS / HAL / LL.</span>
+						<span class="skill-item">Structurer le code de façon modulaire.</span>
+						<span class="skill-item">Développer des drivers.</span>
+						<span class="skill-item">Reprendre et faire évoluer un code existant.</span>
+						<span class="skill-item">Utiliser les outils de débogage pour trouver et résoudre les anomalies.</span>
+						<span class="skill-item">Versionner le code avec Git.</span>
+						<span class="skill-item">Bonne compréhension de l’architecture matérielle d’un microcontrôleur et de son fonctionnement.</span>
+						<span class="skill-item">Développer des logiciels embarqués en C sur ARM / STM32, en bare-metal et sous FreeRTOS.</span>
+						<span class="skill-item">Choisir et implémenter la stratégie de gestion d’entrées : polling vs interruptions vs DMA, selon les contraintes de temps et la charge du microcontrôleur.</span>
+						<span class="skill-item">Réaliser des tests unitaires, d’intégration et des tests sur cible.</span>
+						<span class="skill-item">Documenter son travail.</span>
 					</div>
 				</div>
 
-				<!-- Logiciel embarqué -->
 				<div class="skill-category">
-					<h3><i class="fas fa-code"></i> Logiciel embarqué</h3>
+					<h3><i class="fas fa-wave-square"></i> Électronique analogique</h3>
 					<div class="skill-items">
-						<span class="skill-item">C embarqué sur Nios&nbsp;II (HAL, BSP)</span>
-						<span class="skill-item">C embarqué sur STM32 (HAL, Cube)</span>
-						<span class="skill-item">Conception de drivers bas niveau (GPIO, UART, timers, ADC, PWM)</span>
-						<span class="skill-item">Programmation par interruptions (ISR, gestion d’événements)</span>
-						<span class="skill-item">Mise au point sur cible (debugger, trace série, tests sur carte)</span>
+						<span class="skill-item">Analyser et dimensionner des circuits analogiques.</span>
+						<span class="skill-item">Concevoir des étages à AOP (suiveur, inverseur, non inverseur, intégrateur, comparateurs, sommateur).</span>
+						<span class="skill-item">Réaliser et valider expérimentalement le circuit sur un banc de test.</span>
+						<span class="skill-item">Réaliser le conditionnement d’un capteur.</span>
+						<span class="skill-item">Analyser, dimensionner et valider des convertisseurs d’énergie (redresseurs, hacheurs DC/DC, onduleurs).</span>
+						<span class="skill-item">Lire, interpréter et exploiter les datasheets des composants pour identifier les conditions d’utilisation, les limites et les marges.</span>
+						<span class="skill-item">Concevoir et dimensionner des filtres analogiques selon le cahier des charges.</span>
+						<span class="skill-item">Mesurer, caractériser et déboguer des circuits au laboratoire (oscilloscope, multimètre, alimentation, GBF).</span>
+						<span class="skill-item">Mettre en œuvre une chaîne de mesure complète.</span>
+						<span class="skill-item">Saisir la schématique et router le PCB sous Altium Designer et KiCad.</span>
 					</div>
 				</div>
 
-				<!-- Méthodes -->
-				<div class="skill-category">
-					<h3><i class="fas fa-project-diagram"></i> Méthodes &amp; pratiques</h3>
-					<div class="skill-items">
-						<span class="skill-item">Co-design matériel / logiciel</span>
-						<span class="skill-item">Git &amp; GitHub</span>
-						<span class="skill-item">Linux / ligne de commande</span>
-						<span class="skill-item">Documentation &amp; schémas d’architecture</span>
-					</div>
-				</div>
-
-				<!-- Outils & environnements -->
 				<div class="skill-category">
 					<h3><i class="fas fa-wrench"></i> Outils &amp; environnements</h3>
 					<div class="skill-items">
-						<span class="skill-item">Intel Quartus Prime (Platform Designer, SignalTap II, TimeQuest)</span>
+						<span class="skill-item">Quartus II</span>
+						<span class="skill-item">SignalTap II</span>
 						<span class="skill-item">ModelSim</span>
-						<span class="skill-item">Xilinx Vivado, Vitis / Vitis HLS</span>
-						<span class="skill-item">STM32CubeIDE, STM32CubeMX, STM32CubeProgrammer</span>
-						<span class="skill-item">Keil uVision5</span>
-						<span class="skill-item">Nios&nbsp;II EDS (SBT for Eclipse, Monitor Program)</span>
-						<span class="skill-item">ST-LINK Utility, STM32 Trusted Package Creator</span>
-						<span class="skill-item">Eclipse / DS-5 pour projets embarqués</span>
+						<span class="skill-item">Altera Monitor Program</span>
+						<span class="skill-item">Git</span>
+						<span class="skill-item">Keil uVision</span>
+						<span class="skill-item">Platform Designer / Qsys</span>
+						<span class="skill-item">TimeQuest</span>
+						<span class="skill-item">Vivado</span>
+						<span class="skill-item">Nios II Software Build Tools for Eclipse</span>
+						<span class="skill-item">STM32CubeIDE</span>
+						<span class="skill-item">Altium Designer</span>
+						<span class="skill-item">KiCad</span>
+						<span class="skill-item">PyCharm</span>
+						<span class="skill-item">PySide6</span>
 					</div>
 				</div>
 
-				<!-- Langages -->
 				<div class="skill-category">
 					<h3><i class="fas fa-terminal"></i> Langages de programmation</h3>
 					<div class="skill-items">
-						<span class="skill-item">VHDL (FPGA, IP custom, testbenches)</span>
-						<span class="skill-item">C embarqué (bare-metal, HAL, registres, interruptions, drivers simples)</span>
-						<span class="skill-item">Python (scripts, traitement de données, prototypage)</span>
-						<span class="skill-item">Java (UML &amp; programmation objet)</span>
+						<span class="skill-item">C / C++</span>
+						<span class="skill-item">Python</span>
+						<span class="skill-item">Java</span>
+						<span class="skill-item">VHDL</span>
 					</div>
 				</div>
 

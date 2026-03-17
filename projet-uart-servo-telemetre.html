@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>UART – Servo – Télémètre – TAYOU Loïc Wilfried</title>
+    <title>Chaîne UART – Servomoteur – Télémètre sur FPGA – TAYOU Loïc Wilfried</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -47,8 +47,8 @@
 
 <main>
     <div class="container">
-        <h2 class="section-title"><i class="fas fa-wave-square"></i> Chaîne UART – Servo – Télémètre</h2>
-        <p><strong>Type :</strong> Projet personnel – Carte DE1 Cyclone&nbsp;II – VHDL (tout hardware)</p>
+        <h2 class="section-title"><i class="fas fa-wave-square"></i> Chaîne UART – Servomoteur – Télémètre sur FPGA</h2>
+        <p><strong>Type :</strong> Projet personnel – Polytech Paris-Saclay · Août 2025 – Septembre 2025 · 2 mois</p>
 
         <div class="tags">
             <span class="tag">VHDL</span>
@@ -60,48 +60,34 @@
         </div>
 
         <section class="card">
-            <h3>Résumé du projet</h3>
+            <h3>Résumé</h3>
             <p>
-                Projet personnel inspiré d’un sujet de mini-projet universitaire : tous les blocs sont décrits en
-                <strong>VHDL</strong> et la carte utilisée est la DE1 (pas de processeur, pas de Qsys). L’objectif est de construire une
-                chaîne complète autour d’un FPGA permettant :
+                L’objectif du projet est de concevoir, en VHDL sur FPGA, un système intégrant plusieurs IP matérielles
+                : un module implémentant le protocole UART pour l’échange avec un terminal série, un module pour le
+                pilotage d’un servomoteur, ainsi qu’un module pour le pilotage d’un télémètre ultrason. L’ensemble est piloté par un automate de contrôle qui sélectionne le mode de fonctionnement via les switches SW1 et SW0 :
             </p>
             <ul>
-                <li>d’échanger des données avec un PC via une liaison série UART,</li>
-                <li>de piloter un servomoteur en PWM à partir des commandes reçues,</li>
-                <li>de mesurer une distance avec un télémètre à ultrasons et de renvoyer la mesure au PC.</li>
-            </ul>
-            <p>
-                Le <strong>système complet</strong> implémente un automate qui sélectionne le comportement
-                en fonction des interrupteurs <code>SW1:SW0</code> (Système UART/Servo/Télémètre) : 
-            </p>
-            <ul>
-                <li><strong>SW1 SW0 = 00 :</strong> mode <em>idle</em>, aucun IP (UART, servo, télémètre) n’est actif.</li>
-                <li><strong>SW1 SW0 = 01 :</strong> mode <em>UART + servo</em> : le PC envoie une position via le terminal série
-                    (Putty), traduite en largeur d’impulsion PWM pour positionner le servomoteur.</li>
-                <li><strong>SW1 SW0 = 10 :</strong> mode <em>UART + télémètre</em> : le FPGA commande le télémètre, récupère la distance
-                    mesurée et renvoie cycliquement la valeur vers le terminal PC.</li>
-                <li><strong>SW1 SW0 = 11 :</strong> mode <em>servo + télémètre synchronisés</em> : le servo balaie l’environnement
-                    tandis que le télémètre mesure la distance, ce qui permet d’associer une mesure de distance à un angle donné.</li>
+                <li><strong>SW1 SW0 = 00 :</strong> aucun IP (UART, servomoteur, télémètre) n’est actif.</li>
+                <li><strong>SW1 SW0 = 01 :</strong> commande du servomoteur depuis le PC (via le bus UART).</li>
+                <li><strong>SW1 SW0 = 10 :</strong> envoi cyclique des mesures de distance vers le PC via le bus UART.</li>
+                <li><strong>SW1 SW0 = 11 :</strong> commande automatique du servomoteur à partir des distances mesurées par le télémètre.</li>
             </ul>
         </section>
 
         <section class="card">
-            <h3>Ce que j’ai réalisé</h3>
+            <h3>Tâches accomplies</h3>
             <ul>
-                <li>Implémentation VHDL des blocs UART RX/TX paramétrables (baudrate, format 8N1).</li>
-                <li>Générateur de PWM pour servomoteur (période = 20&nbsp;ms, position contrôlée par registre).</li>
-                <li>IP télémètre ultrason (génération du pulse de déclenchement, mesure du temps d’écho, conversion en distance).</li>
-                <li>Écriture de testbenches dédiés (UART_TX_tb, UART_RX_tb, SERVO_tb, TÉLÉMÈTRE_tb) et scripts
-                    <code>.do</code> ModelSim pour automatiser les simulations.</li>
-                <li>Automate VHDL de supervision implémentant les 4 modes (idle, UART+servo, UART+télémètre, servo+télémètre).</li>
-                <li>Intégration de tous les blocs dans une top-level et validation du fonctionnement complet sur la carte DE1.</li>
+                <li>Mettre en œuvre le protocole UART en VHDL.</li>
+                <li>Développer en VHDL un module paramétrable générant des signaux PWM, puis un module permettant de piloter le servomoteur à partir de ce générateur, via une sortie GPIO de la carte.</li>
+                <li>Développer en VHDL un module permettant de commander le télémètre ultrason pour réaliser des mesures de distances.</li>
+                <li>Implémenter l’automate permettant de sélectionner un mode de fonctionnement via les switches SW0 et SW1.</li>
+                <li>Valider chaque IP par simulation fonctionnelle : testbenches + scripts Tcl (.do).</li>
             </ul>
         </section>
 
         <section class="card">
-            <h3>Techno &amp; outils</h3>
-            <p>FPGA DE1 Cyclone&nbsp;II, VHDL, UART, PWM, télémètre à ultrasons, Intel Quartus, ModelSim (testbenches + scripts .do).</p>
+            <h3>Environnement technique</h3>
+            <p>ModelSim, Quartus, PuTTY, VHDL, Oscilloscope, Breadboard, FPGA (carte DE1), Servomoteur, Télémètre ultrason, Cycle en V</p>
             <div class="links">
                 <a class="btn secondary" href="index.html#projects"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
                 <a class="btn" href="https://github.com/loic-tayou-embedded/fpga-uart-servo-telemetre" target="_blank">

@@ -62,88 +62,30 @@
         </div>
 
         <section class="card">
-            <h3>Résumé du projet</h3>
+            <h3>Résumé</h3>
             <p>
-                Ce projet explore deux types d’<strong>instructions personnalisées Nios&nbsp;II</strong> (interface extended)
-                pour l’accélération de traitements de signal / image :
-            </p>
-            <ul>
-                <li>une <strong>instruction multi-cycle</strong> <code>MAC_OP</code> dédiée à la convolution 3×3
-                    (filtre de type gaussien) sur une image 4×4 ;</li>
-                <li>une <strong>instruction combinatoire</strong> <code>FILTRE_MOYENNEUR</code> implémentant un filtre
-                    moyenneur 1D appliqué sur une ligne.</li>
-            </ul>
-            <p>
-                Les deux opérations partagent la même interface matérielle (<code>MAC_FILTRE_INTERFACE</code>) et sont
-                sélectionnées par un champ de contrôle (paramètre <code>N</code> de l’instruction custom). Côté logiciel,
-                deux macros C distinctes (<code>custom_mac_op()</code> et <code>filtre_moyenneur_custom()</code>) permettent
-                d’appeler facilement la variante souhaitée depuis le code utilisateur.
-            </p>
-            <p>
-                Pour chaque traitement (convolution 3×3 et filtre moyenneur 1D), une version
-                <strong>matérielle</strong> et une version <strong>pure software</strong> en C sont implémentées.
-                Le temps d’exécution est mesuré grâce au <strong>timestamp timer</strong> de la HAL, ce qui permet
-                de calculer le speedup apporté par les instructions personnalisées.
+                Ce projet FPGA vise à mettre en œuvre une instruction étendue (custom instruction) sur un FPGA pour
+                accélérer des traitements de filtrage, typiquement utilisés en traitement d’image ou du signal. Cette
+                implémentation matérielle est comparée à une version logicielle en C, afin d’évaluer le gain de vitesse
+                (speed-up). Le processus de développement inclut une validation de l’IP par simulation fonctionnelle.
             </p>
         </section>
 
         <section class="card">
-            <h3>Détails des traitements accélérés</h3>
+            <h3>Tâches accomplies</h3>
             <ul>
-                <li>
-                    <strong>Convolution 3×3 (MAC_OP – multi-cycle)</strong><br>
-                    <ul>
-                        <li>Image de test 4×4 stockée dans un tableau C (<code>input_image</code>),</li>
-                        <li>noyau gaussien 3×3 (<code>[1 2 1; 2 4 2; 1 2 1]</code>),</li>
-                        <li>pour chaque pixel interne, les 9 produits pixel×poids sont réalisés par l’instruction custom
-                            <code>MAC_OP</code>, ainsi que l'accumulation.</li>
-                        <li>comparaison avec une implémentation en C sur Nios&nbsp;II.</li>
-                    </ul>
-                </li>
-                <li>
-                    <strong>Filtre moyenneur 1D (FILTRE_MOYENNEUR – combinatoire)</strong><br>
-                    <ul>
-                        <li>Filtre du type : <code>y[i] = (3·x[i] + 1·x[i+1]) &gt;&gt; 2</code>,</li>
-                        <li>version custom : appel à <code>filtre_moyenneur_custom()</code> pour chaque paire de pixels
-                            consécutifs, le calcul étant réalisé en un cycle par la logique combinatoire,</li>
-                        <li>version software : même opération réalisée en C (multiplications + addition + décalage),
-                            puis comparaison de temps via le timestamp.</li>
-                    </ul>
-                </li>
+                <li>Développer en VHDL un module IP implémentant la convolution 3×3, basé sur une cellule MAC, avec décomposition du calcul en opérations élémentaires et ordonnancé en pipeline pour augmenter le débit.</li>
+                <li>Étendre le jeu d’instructions du Nios II via Platform Designer en intégrant ce module IP sous forme d’instruction étendue.</li>
+                <li>Développer une version C des mêmes traitements pour comparer les performances logicielles et matérielles.</li>
+                <li>Mesurer le gain de vitesse avec le timestamp timer de la HAL.</li>
+                <li>Valider fonctionnellement l’IP par simulation à l’aide d’un testbench et d’un script Tcl (.do).</li>
             </ul>
         </section>
 
         <section class="card">
-            <h3>Ce que j’ai réalisé</h3>
-            <ul>
-                <li>Écriture en VHDL des blocs :
-                    <ul>
-                        <li><code>MAC_OP</code> multi-cycle (multiplications–accumulations),</li>
-                        <li><code>FILTRE_MOYENNEUR</code> combinatoire,</li>
-                        <li>blocs d’addition <code>ADDC1</code>, <code>ADDCN</code> et <code>multiplier</code>,</li>
-                        <li>interface <code>MAC_FILTRE_INTERFACE</code> avec gestion du champ de sélection d’instruction.</li>
-                    </ul>
-                </li>
-                <li>Intégration de l’instruction personnalisée extended dans Nios&nbsp;II via Platform Designer
-                    (Custom Instruction), génération de la BSP et du système.</li>
-                <li>Développement du code C embarqué :
-                    <ul>
-                        <li>macro-instructions <code>custom_mac_op()</code> et <code>filtre_moyenneur_custom()</code>,</li>
-                        <li>implementations software,</li>
-                        <li>mesures de performances avec <code>alt_timestamp_start()</code> et
-                            <code>alt_timestamp()</code>, calcul de l’accélération.</li>
-                    </ul>
-                </li>
-                <li>Validation fonctionnelle par simulation ModelSim, puis tests sur la carte DE1.</li>
-            </ul>
-        </section>
-
-        <section class="card">
-            <h3>Techno &amp; outils</h3>
+            <h3>Environnement technique</h3>
             <p>
-                FPGA Cyclone&nbsp;II (DE1), processeur Nios&nbsp;II, interface
-                <strong>Custom Instruction extended</strong>, VHDL (arithmétique, MAC, filtres),
-                C embarqué (HAL), timestamp timer, Intel Quartus, Platform Designer, ModelSim.
+                ModelSim, Quartus, Altera Monitor Program, VHDL, C, Co-design matériel/logiciel, FPGA (carte DE1), Cycle en V
             </p>
             <div class="links">
                 <a class="btn secondary" href="index.html#projects">

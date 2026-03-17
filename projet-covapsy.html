@@ -52,47 +52,33 @@
             <span class="tag">Véhicule autonome</span>
         </div>
 
-        <section class="card">
-            <h3>Résumé du projet</h3>
+                <section class="card">
+            <h3>Résumé</h3>
             <p>
-                Projet de 5ᵉ année avec pour but une participation à la compétition CoVAPSy (Course de Voitures Autonomes Paris-Saclay) avec un véhicule
-                1/10ᵉ utilisant une carte NUCLEO-L432KC (STM32), un moteur DC pour la propulsion, un servomoteur pour la
-                direction et un LiDAR Slamtec A2M12 360° pour la perception de l’environnement. La version choisie
-                « STM32 only » ne s’appuie que sur le microcontrôleur (pas de nano-ordinateur).
+                Projet réalisé en groupe dans le cadre de la course CoVAPSy (ENS Paris-Saclay), consistant à développer
+                le firmware d’un véhicule autonome piloté par un microcontrôleur STM32 et s’appuyant sur un LiDAR 360°
+                SLAMTEC A2M12. L’objectif est de permettre au véhicule de se déplacer de façon autonome sur un circuit
+                en exploitant les mesures du LiDAR reçues en continu (UART + DMA) et en commandant la propulsion et
+                la direction via des signaux PWM.
             </p>
         </section>
 
-        <section class="card">
-            <h3>Ce que j’ai réalisé</h3>
+                <section class="card">
+            <h3>Tâches accomplies</h3>
             <ul>
-                <li>Configuration de l’horloge STM32 et des timers TIM1/TIM2 pour la génération des PWM :
-                    <ul>
-                        <li>TIM1 : PWM propulsion et direction (période 20 ms pour servo / variateur).</li>
-                        <li>TIM2 : PWM pour le moteur du LiDAR.</li>
-                    </ul>
-                </li>
-                <li>Configuration de l’UART1 à <strong>256 000 bauds</strong> avec <strong>DMA ping-pong (Double Buffer)</strong> pour réception continue
-                    des trames LiDAR (DMA1 Channel5 + interruption de fin de transfert).</li>
-                <li>Développement du module LiDAR :
-                    <ul>
-                        <li>fonction <code>Lidar_init()</code> : démarrage du moteur, envoi des commandes start/stop scan, configuration DMA,</li>
-                        <li>double buffer DMA (<code>active_buffer</code> / <code>processing_buffer</code>) et callback <code>HAL_UART_RxCpltCallback()</code> pour marquer les données prêtes,</li>
-                        <li>fonction <code>mesure()</code> : décodage des paquets (5 octets), calcul de l’angle et de la distance, remplissage d’un tableau de 360 points.</li>
-                    </ul>
-                </li>
-                <li>Conception de l’algorithme de navigation :
-                    <ul>
-                        <li>fonction <code>calculer_erreur_maximale_opt()</code> pour comparer les distances gauche/droite sur l’anneau de mesures,</li>
-                        <li>loi de commande : angle de direction proportionnel à l’erreur, vitesse réduite quand l’angle augmente,</li>
-                        <li>fonctions <code>set_direction_degres()</code> et <code>set_vitesse_m_s()</code> pilotant les PWM.</li>
-                    </ul>
-                </li>
+                <li>Intégrer un LiDAR 360° SLAMTEC A2M12 à bord du véhicule et piloter son moteur via un signal PWM.</li>
+                <li>Établir la communication UART entre le LiDAR et le STM32, et configurer le DMA en mode ping-pong
+                    (double buffer) pour la réception continue des trames.</li>
+                <li>Piloter la propulsion et la direction du véhicule en générant les signaux PWM pour commander l’ESC
+                    (vitesse) et le servomoteur (direction).</li>
+                <li>Implémenter une stratégie de navigation basée sur l’exploitation des mesures fournies par le LiDAR.</li>
+                <li>Tester l’algorithme sur le simulateur Webots.</li>
             </ul>
         </section>
 
         <section class="card">
-            <h3>Techno &amp; outils</h3>
-            <p>STM32 NUCLEO-L432KC, STM32CubeIDE, HAL STM32, UART + DMA, timers/PWM, LiDAR Slamtec A2M12, C embarqué.</p>
+            <h3>Environnement technique</h3>
+            <p>STM32CubeIDE, STM32CubeMX, PuTTY, Webots, LiDAR 360° SLAMTEC A2M12, STM32 NUCLEO L432KC, Voiture autonome CoVAPSy, Cycle en V</p>
             <div class="links">
                 <a class="btn secondary" href="index.html#projects"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
                 <a class="btn" href="https://github.com/loic-tayou-embedded/covapsy-vehicule-autonome-stm32-lidar" target="_blank">

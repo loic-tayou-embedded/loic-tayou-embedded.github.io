@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Horloge mondiale avec affichage déporté sous FreeRTOS – TAYOU Loïc Wilfried</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+             background:radial-gradient(circle at top,#111827,#020617);color:#e5e7eb;line-height:1.6}
+        a{text-decoration:none;color:inherit}
+        .container{max-width:900px;margin:0 auto;padding:0 1.2rem}
+        header{position:sticky;top:0;z-index:10;background:rgba(2,6,23,.9);
+               backdrop-filter:blur(10px);border-bottom:1px solid #1f2937}
+        .nav{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0}
+        .logo{font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.9rem}
+        main{padding:2.5rem 0 3rem}
+        .section-title{font-size:1.6rem;margin-bottom:1rem;display:flex;align-items:center;gap:.7rem}
+        .section-title i{color:#4f46e5}
+        .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.8rem 0 1.2rem}
+        .tag{font-size:.75rem;padding:.2rem .6rem;border-radius:999px;
+             border:1px solid rgba(148,163,184,.5);background:#020617;color:#9ca3af}
+        .card{background:#111827;border-radius:1rem;border:1px solid #1f2937;
+              padding:1.2rem 1.3rem;margin-bottom:1rem}
+        h3{margin:.6rem 0}
+        footer{text-align:center;padding:1rem 0 2rem;font-size:.8rem;color:#9ca3af}
+        .links{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1rem}
+        .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .9rem;
+             border-radius:999px;border:1px solid #4f46e5;background:#4f46e5;
+             color:#e5e7eb;font-size:.85rem}
+        .btn.secondary{background:transparent;border-color:#374151;color:#9ca3af}
+        .btn:hover{opacity:.9}
+        ul{padding-left:1.1rem}
+    </style>
+</head>
+<body>
+<header>
+    <div class="container nav">
+        <div class="logo">TAYOU Loïc Wilfried</div>
+        <nav>
+            <ul style="display:flex;gap:1rem;list-style:none;font-size:.9rem;">
+                <li><a href="index.html#projects">Retour au portfolio</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <h2 class="section-title"><i class="fas fa-globe"></i> Horloge mondiale avec affichage déporté sous FreeRTOS</h2>
+        <p><strong>Type :</strong> Projet personnel – DE1 + STM32 Nucleo + ESP32 – FreeRTOS</p>
+
+        <div class="tags">
+            <span class="tag">Nios II</span>
+            <span class="tag">FreeRTOS</span>
+            <span class="tag">SPI</span>
+            <span class="tag">CAN</span>
+            <span class="tag">I2C</span>
+            <span class="tag">UART</span>
+            <span class="tag">STM32</span>
+            <span class="tag">ESP32</span>
+        </div>
+
+        <section class="card">
+            <h3>Résumé</h3>
+            <p>
+                Ce projet consiste en un système d’affichage temps réel qui montre l’heure de différentes villes et la
+                température ambiante sur un écran OLED. Le système est divisé en deux parties interconnectées : un
+                module principal comprenant un processeur Nios II (sous FreeRTOS) sur la carte DE1, couplé à une carte
+                STM32 Nucleo interfacée avec un capteur de température ; un module d’affichage comprenant un ESP32
+                (sous FreeRTOS) pilotant un écran OLED. Au démarrage, le Nios II demande l’heure de Paris via le terminal
+                série, puis affiche en continu la ville et l’heure actuelles tout en permettant à l’utilisateur de changer
+                de ville et de régler l’heure. Ensuite, chaque seconde, le Nios II transmet la ville et l’heure à la STM32
+                via le bus SPI, qui relaie ces informations ainsi que la température mesurée à l’ESP via le bus CAN pour
+                l’affichage sur l’écran OLED.
+            </p>
+        </section>
+
+        <section class="card">
+            <h3>Tâches accomplies</h3>
+            <ul>
+                <li>Architecturer un système autour du processeur softcore Nios II, intégrant des IP core interfacés via le bus Avalon.</li>
+                <li>Implémenter un driver UART en polling pour les accès en lecture et écriture sur le terminal série.</li>
+                <li>Concevoir une tâche centralisant l’accès à la ressource partagée qu’est la console pour éviter les conflits d’accès et garantir un affichage stable sur le terminal série.</li>
+                <li>Réaliser la synchronisation inter-tâches via le mécanisme des queues FreeRTOS.</li>
+                <li>Mettre en œuvre un timer matériel avec interruptions pour réaliser le décompte temporel.</li>
+                <li>Implémenter une tâche dédiée avec accès exclusif au bus SPI.</li>
+                <li>Implémenter une queue de données pour le transfert des données (ville + heure) à la tâche pilotant le bus SPI.</li>
+                <li>Réceptionner les données provenant de la carte DE1 via le bus SPI et lire les données de température via le bus I2C sur la carte STM32.</li>
+                <li>Transmettre via le bus CAN les données de ville et d’heure chaque seconde, et les données de température chaque minute.</li>
+                <li>Réceptionner sur la carte ESP32 les données transmises via le bus CAN, puis mettre à jour l’affichage sur l’écran OLED via le bus I2C (ville, heure, température).</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h3>Environnement technique</h3>
+            <p>
+                STM32CubeIDE, Quartus, Arduino IDE, Nios II Software Build Tools for Eclipse, PuTTY, Tera Term, VHDL,
+                Co-design matériel/logiciel, C, CAN, I2C, SPI, UART
+            </p>
+            <div class="links">
+                <a class="btn secondary" href="index.html#projects">
+                    <i class="fas fa-arrow-left"></i> Retour au portfolio
+                </a>
+                <a class="btn" href="#" target="_blank">
+                    <i class="fab fa-github"></i> Code source (GitHub)
+                </a>
+            </div>
+        </section>
+    </div>
+</main>
+
+<footer>
+    &copy; 2025 – TAYOU Loïc Wilfried
+</footer>
+</body>
+</html>

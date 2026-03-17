@@ -54,31 +54,31 @@
         </div>
 
         <section class="card">
-            <h3>Résumé du projet</h3>
+            <h3>Résumé</h3>
             <p>
-                Projet coopératif de 4ᵉ année : conception d’une borne de recharge murale 230 V AC mode 3 pour véhicule
-                électrique, conforme à la norme ISO/IEC 61851 et à la recommandation SAE J1772. L’objectif était de
-                développer le <strong>contrôleur électronique basse puissance</strong> (hors électronique de puissance) en charge
-                du signal pilote, de la détection d’état du véhicule et de la commande du contacteur principal, en s’interfaçant
-                avec un module ESP32 et un simulateur de véhicule Schneider.
+                Projet visant à comprendre et mettre en œuvre le fonctionnement d’une borne de recharge AC en mode 3,
+                avec une attention particulière portée à la carte électronique de contrôle (hors électronique de puissance).
+                La carte assure le dialogue borne–véhicule via la ligne CP (Control Pilot) : génération du signal PWM,
+                interprétation des niveaux de tension normalisés et détection des états du véhicule (connecté, prêt à
+                charger, défaut...), et validation à l’aide d’un simulateur de véhicule Schneider EVA1SADS.
             </p>
         </section>
 
         <section class="card">
-            <h3>Ce que j’ai réalisé</h3>
+            <h3>Tâches accomplies</h3>
             <ul>
-                <li>Recherche et lecture des normes ISO 61851 et SAE J1772 et de la documentation associée (notes d’application, exemples de schémas).</li>
-                <li>Définition de l’architecture du contrôleur (génération/mesure du signal pilote, détection des états A/B/C, commande contacteur).</li>
-                <li><strong>Dimensionnement des composants analogiques</strong> : résistances, pont diviseur de tension, amplificateur rail to rail LM6142, détecteur de crête, etc.</li>
-                <li>Prototypage sur plaque à essai avec alimentation de laboratoire et oscilloscope pour valider les niveaux de tension et la forme d’onde du signal pilote.</li>
-                <li>Conception du schéma et routage du PCB sous <strong>Altium Designer</strong> (placement, plans d’alim, connecteurs vers ESP32 et contacteur).</li>
-                <li>Tests du PCB fabriqué : vérification des tensions, mesures du signal pilote et validation avec le simulateur de véhicule.</li>
+                <li>Analyser les normes ISO 61851 et SAE J1772.</li>
+                <li>Définir l’architecture de la carte de contrôle, dimensionner les composants, puis réaliser et tester le
+                montage sur une breadboard.</li>
+                <li>Concevoir et router la carte électronique sous Altium Designer.</li>
+                <li>Valider le fonctionnement avec un simulateur de véhicule Schneider EVA1SADS.</li>
             </ul>
         </section>
 
         <section class="card">
-            <h3>Techno &amp; outils</h3>
-            <p>Altium Designer, électronique analogique, filtrage, simulateur de véhicule Schneider, norme ISO 61851 / SAE J1772.</p>
+            <h3>Environnement technique</h3>
+            <p>Altium Designer, Arduino IDE, Oscilloscope, alimentation de laboratoire, Breadboard, ESP32, multimètre,
+            Simulateur de véhicule Schneider EVA1SADS</p>
             <div class="links">
                 <a class="btn secondary" href="index.html#projects"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
                 <a class="btn" href="https://github.com/loic-tayou-embedded/borne-recharge-ac-iso61851" target="_blank">

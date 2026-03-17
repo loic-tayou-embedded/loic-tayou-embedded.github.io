@@ -42,77 +42,42 @@
 <main>
     <div class="container">
         <h2 class="section-title"><i class="fas fa-robot"></i> Système embarqué de commande de robot suiveur de ligne</h2>
-        <p><strong>Type :</strong> Projet en binôme – 5ᵉ année cycle ingénieur – DE0-Nano</p>
+        <p><strong>Type :</strong> Projet académique – Polytech Paris-Saclay · Octobre 2024 – Janvier 2025 · 4 mois</p>
 
         <div class="tags">
-            <span class="tag">Robotique embarquée</span>
-            <span class="tag">FPGA &amp; VHDL</span>
-            <span class="tag">ADC &amp; capteurs IR</span>
-            <span class="tag">PWM moteurs</span>
-            <span class="tag">Co-design HW/SW</span>
+            <span class="tag">Nios II</span>
+            <span class="tag">FPGA DE0-Nano</span>
+            <span class="tag">VHDL</span>
+            <span class="tag">C bare-metal</span>
+            <span class="tag">SPI</span>
+            <span class="tag">Co-design matériel/logiciel</span>
         </div>
 
         <section class="card">
-            <h3>Résumé du projet</h3>
+            <h3>Résumé</h3>
             <p>
-                Conception d’un système de commande pour un robot suiveur de ligne utilisant une carte DE0-Nano capable de naviguer 
-				dans un labyrinthe en suivant une ligne noire.
-				Le robot utilise 7 capteurs infrarouges pour la navigation autonome, un contrôle précis des moteurs par modulation PWM, 
-				un automates VHDL pour le suivi de ligne avec correction de trajectoire en temps réel, la rotation sur place en cas de perte de la ligne et la gestion de fin de parcours. 
-				L'architecture technique repose sur un FPGA Cyclone IV avec processeur Nios II soft-core, une interface SPI pour l'acquisition des capteurs
-				via un ADC 12 bits et des PIO d'entrées / sorties.
-            </p>
-            <p>
-                Le système a été validé en simulation (IP vhdl) puis testé
-                en conditions réelles sur le robot (DE0-Nano + cartes moteurs/capteurs).
+                Projet de conception d’un système embarqué autonome de suivi de ligne pour un robot mobile, basé sur
+                une carte FPGA DE0-Nano (Cyclone IV) intégrant un processeur softcore Nios II. L’architecture combine
+                une partie matérielle en VHDL (acquisition des capteurs IR via ADC 12 bits en SPI, automates de suivi de
+                ligne et de rotation, génération des signaux PWM des moteurs) et une partie logicielle en C bare-metal
+                (supervision des automates via des PIO mappés en mémoire).
             </p>
         </section>
 
         <section class="card">
-			<h3>Ce que nous avons réalisé en binôme</h3>
-			<ul>
-				<li>
-					Mise en place de l’architecture matérielle Nios&nbsp;II&nbsp;/ SDRAM&nbsp;/ PIO sous Qsys,
-					connexion aux capteurs et aux moteurs, et validation initiale par un programme C
-					pilotant les LEDs à partir des switchs de la carte.
-				</li>
-				<li>
-					Caractérisation expérimentale des moteurs du robot : calcul de la période PWM
-					(50&nbsp;MHz → 16&nbsp;kHz), mesures des rapports cycliques de démarrage hors sol / sur sol,
-					détermination de la vitesse minimale fiable et choix de <strong>Vmin = 70&nbsp;%</strong>. :contentReference[oaicite:0]{index=0}
-				</li>
-				<li>
-					Mise en place de la chaîne de mesure des capteurs de sol : récupération des
-					données brutes, calcul du seuil de détection (moyenne sur fond blanc/noir),
-					puis calcul de la position de la ligne <code>pos_ligne</code> à partir des indices des
-					capteurs actifs (PPU, PDU).
-				</li>
-				<li>
-					Conception et description en <strong>VHDL</strong> des automates :
-					<ul>
-						<li>automate de <strong>suivi de ligne</strong> (correction de trajectoire en fonction de
-							<code>pos_ligne</code>, gestion des virages gauche/droite) ;</li>
-						<li>automate de <strong>rotation sur place</strong> lorsque la ligne est perdue
-							(gestion de <code>start_rot</code>, <code>fin_rot</code>, direction de rotation) ;</li>
-					</ul>
-				</li>
-				<li>
-					Développement du code <strong>C embarqué</strong> sur Nios&nbsp;II pour superviser les automates matériels :
-					surveillance continue des signaux <code>START</code>, <code>FIN_SL</code>, <code>FIN_ROT</code>,
-					pilotage de <code>START_SL</code>, <code>START_ROT</code> et <code>DIR_ROT</code>, et
-					synchronisation avec la disponibilité des données capteurs (<code>READY</code>).
-				</li>
-				<li>
-					Validation complète du système : simulations fonctionnelles (suivi de ligne, perte
-					de ligne, rotation, aller-retour) puis tests sur robot réel avec réglage des gains et
-					des seuils jusqu’à obtenir un suivi de ligne stable.
-				</li>
-			</ul>
-		</section>
+            <h3>Tâches accomplies</h3>
+            <ul>
+                <li>Développer en VHDL un module d’acquisition incluant l’implémentation du protocole SPI pour piloter l’ADC 12 bits et lire séquentiellement les 7 canaux reliés aux capteurs IR.</li>
+                <li>Développer un module en VHDL de calcul de la position du robot à l’aide des valeurs seuillées des capteurs IR.</li>
+                <li>Développer un module en VHDL pour générer les signaux PWM pour la commande des moteurs.</li>
+                <li>Développer en VHDL un automate pour le suivi de ligne et la rotation.</li>
+                <li>Superviser l’automate VHDL et le comportement global du système en C bare-metal sur Nios II.</li>
+            </ul>
+        </section>
 
         <section class="card">
-            <h3>Techno &amp; outils</h3>
-            <p>FPGA DE0-Nano, VHDL, ADC, PWM, Intel Quartus, ModelSim.</p>
+            <h3>Environnement technique</h3>
+            <p>ModelSim, Quartus, Altera Monitor Program, VHDL, C, SPI, Co-design matériel/logiciel, Cute Car Robotic, Cycle en V</p>
             <div class="links">
                 <a class="btn secondary" href="index.html#projects"><i class="fas fa-arrow-left"></i> Retour au portfolio</a>
                 <a class="btn" href="https://github.com/loic-tayou-embedded/robot-suiveur-ligne-nios2-fpga" target="_blank">

@@ -104,86 +104,26 @@
         </div>
 
         <section class="card">
-            <h3>Résumé du projet</h3>
+            <h3>Résumé</h3>
             <p>
-                Conception d’une montre « multimode » sur FPGA avec trois modes principaux :
-                <strong>horloge</strong> (HH:MM), <strong>chronomètre</strong> et <strong>alarme</strong>, le tout
-                affiché sur les 4 afficheurs 7&nbsp;segments de la carte DE1.
-            </p>
-            <p>
-                L’architecture repose sur un processeur <strong>Nios&nbsp;II</strong>, un timer interval configuré à 1&nbsp;s,
-                des PIO pour les boutons <code>KEY</code>, les commutateurs <code>SW</code>, les LEDs et les afficheurs,
-                ainsi que <strong>deux IP personnalisées Avalon-MM</strong> :
-            </p>
-            <ul>
-                <li><strong>CHRONO</strong> : Un NIOS II custom component pour le chronomètre matériel (démarrage/arrêt/reset via registre),
-                    synchronisé par le tick de 1&nbsp;s ;</li>
-                <li><strong>ALARM_BELL</strong> : Un NIOS II custom component pour l’alarme qui pilote un
-                    <em>chenillard</em> sur les LEDs (LEDR)
-                    si l'alarme est arrivée à échéance.</li>
-            </ul>
-            <p>
-                Le Nios&nbsp;II gère la logique de haut niveau (changement de mode, réglage de l’heure et de
-                l'alarme, synchronisation avec l’horloge système), tandis que les IP <code>CHRONO</code> et
-                <code>ALARM_BELL</code> prennent en charge la partie temps réel directement en logique VHDL. 
-                C’est un exemple typique de <strong>co-design matériel / logiciel</strong> sur FPGA.
+                Développement d’un système embarqué sur FPGA pour réaliser une montre numérique multi-modes (horloge, chronomètre, alarme), basée sur un processeur Nios II et des IP matérielles dédiées. Le projet intègre une base de temps à 1 Hz générée par un timer avec interruptions, l’affichage sur des afficheurs 7 segments, ainsi qu’un chenillard à LEDs servant de sonnerie d’alarme, avec validation des IP par simulation fonctionnelle.
             </p>
         </section>
 
         <section class="card">
-            <h3>Fonctionnement de la montre</h3>
+            <h3>Tâches accomplies</h3>
             <ul>
-                <li><strong>Mode horloge</strong> : le timer interval génère une interruption toutes les 1&nbsp;s ;
-                    l’ISR incrémente une structure <code>horloge</code> (heures, minutes, secondes)
-                    et l’affichage est mis à jour en HH:MM. Les commutateurs <code>SW</code> permettent
-                    de régler l’heure (heures/minutes) lorsqu’on appuie sur la touche <strong>KEY3</strong> de configuration et la led vert <code>LEDG0</code> permet de signaler le mode horloge.</li>
-                <li><strong>Mode chronomètre</strong> : la touche de mode <strong>KEY1</strong> permet de basculer en mode chrono et La led vert <code>LEDG1</code> permet de signaler ce mode.
-                    L'utilisateur peut démarrer et stopper le chronomètre via la touche <strong>KEY2</strong> ou le réinitialiser via la touche <strong>KEY3</strong>. Le processeur active ou stoppe l’IP <code>CHRONO</code> en écrivant dans un registre
-                    mémoire-mappé ; le composant matériel compte à 1&nbsp;Hz et prend en charge la logique
-                    de chronomètre.</li>
-                <li><strong>Mode alarme</strong> : la touche de mode <strong>KEY1</strong> permet de basculer en mode alarme et La led verte <code>LEDG2</code> permet de signaler ce mode. dans ce mode, l'heure est programmée via les commutateurs
-                    (heures/minutes) et l'activation de l'alarme se fait via la touche <strong>KEY2</strong>.
-                    Quand l’horloge atteint l’instant programmé, le logiciel déclenche l’IP
-                    <code>ALARM_BELL</code> qui active un chenillard sur les LEDs qui reste actif tant que l’utilisateur
-                    n’appuie pas sur le bouton d’arrêt d’alarme (<strong>KEY3</strong>).</li>
-            </ul>
-            <p>
-                L’horloge continue de tourner en permanence en arrière-plan (comme une vraie montre),
-                même lorsqu’on se trouve en mode chronomètre ou alarme. Les LEDs <code>LEDG</code> indiquent
-                en temps réel le mode actif (horloge / chrono / alarme). Les touches KEYs sont configurer pour lever
-				des interruptions (le niveau de leur irq est-elle que celui du timer interval soit prioritaire) s'ils sont appuyés.
-            </p>
-        </section>
-
-        <section class="card">
-            <h3>Ce que j’ai réalisé</h3>
-            <ul>
-                <li>Conception de l’architecture globale : Nios&nbsp;II + timer + PIO + deux
-                    <strong>Custom Components Avalon-MM</strong> (<code>CHRONO</code> et <code>ALARM_BELL</code>).</li>
-                <li>Écriture des blocs VHDL :
-                    <ul>
-                        <li>l'IP du chronomètre matériel (<code>CHRONO</code>) ;</li>
-                        <li>IP <code>ALARM_BELL</code> incluant le pilotage du chenillard de LEDs ;</li>
-                        <li>modules auxiliaires (compteurs BCD, diviseur de fréquence, pilotes 7&nbsp;segments).</li>
-						<li>le top_level.</li>
-                    </ul>
-                </li>
-                <li>Les interfaces avec le bus Avalon des IPs (<code>CHRONO</code>) et (<code>ALARM_BELL</code>) et leur
-                    intégration dans  qsys / Platform Designer.</li>
-                <li>Développement du firmware en C embarqué (HAL Nios&nbsp;II) :
-                    gestion des interruptions du timer et des touches KEYs, machine d’états de la montre, lecture des touches et des
-                    commutateurs, écriture dans les registres de contrôle des IP personnalisées.</li>
-                <li>Validation en simulation fonctionnelle des blocs VHDL (ModelSim), puis tests finaux sur la carte DE1.</li>
+                <li>Architecturer un système autour du processeur softcore Nios II, intégrant des IP personnalisées interfacées via le bus Avalon, et configurer le timer de sorte à générer une interruption périodique à 1 Hz.</li>
+                <li>Implémenter en VHDL un chronomètre matériel, un chenillard à LEDs et un module de pilotage des afficheurs 7 segments. Empaqueter ces modules en IP personnalisées et les intégrer au système Nios II via le bus Avalon.</li>
+                <li>Développer le firmware en C sur Nios II (HAL), incluant la gestion des interruptions, le pilotage des afficheurs 7 segments et la machine à états pour la gestion des différents modes (horloge / alarme / chronomètre).</li>
+                <li>Valider fonctionnellement chaque IP par simulation à l’aide de testbenches et de scripts Tcl (.do).</li>
             </ul>
         </section>
 
         <section class="card">
-            <h3>Techno &amp; outils</h3>
+            <h3>Environnement technique</h3>
             <p>
-                FPGA Cyclone&nbsp;II (DE1), Nios&nbsp;II, bus Avalon-MM (PIO, timer, IP custom),
-                Custom Components Avalon (<code>CHRONO</code>, <code>ALARM_BELL</code>), VHDL,
-                C embarqué (HAL), gestion d’interruptions (timer 1&nbsp;s), Intel Quartus,
-                Platform Designer, ModelSim.
+                ModelSim, Quartus, Altera Monitor Program, VHDL, C, Co-design matériel/logiciel, FPGA (carte DE1), Cycle en V
             </p>
             <div class="links">
                 <a class="btn secondary" href="index.html#projects">
